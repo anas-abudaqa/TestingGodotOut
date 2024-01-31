@@ -161,6 +161,8 @@ animations = [{
 size = Vector2(28, 22)
 
 [node name="Snail" type="CharacterBody2D" groups=["Damageable", "Enemies"]]
+collision_layer = 4
+collision_mask = 5
 script = ExtResource("1_b1ou3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

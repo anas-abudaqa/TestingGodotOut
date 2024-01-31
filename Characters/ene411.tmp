@@ -1,0 +1,89 @@
+[gd_scene load_steps=14 format=3 uid="uid://dhi3eab0pj2k6"]
+
+[ext_resource type="Script" path="res://Characters/enemy_snail.gd" id="1_b1ou3"]
+[ext_resource type="Texture2D" uid="uid://t358w2c3xeqk" path="res://Legacy-Fantasy - High Forest 2.3/Mob/Snail/walk-Sheet.png" id="1_j0tsu"]
+[ext_resource type="PackedScene" uid="uid://b0glgx3pu4xre" path="res://Components/health&shield_component.tscn" id="3_oso76"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1ip0"]
+atlas = ExtResource("1_j0tsu")
+region = Rect2(0, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwltu"]
+atlas = ExtResource("1_j0tsu")
+region = Rect2(48, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h5d65"]
+atlas = ExtResource("1_j0tsu")
+region = Rect2(96, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hgvvn"]
+atlas = ExtResource("1_j0tsu")
+region = Rect2(144, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eloty"]
+atlas = ExtResource("1_j0tsu")
+region = Rect2(192, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yp6to"]
+atlas = ExtResource("1_j0tsu")
+region = Rect2(240, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_upjqk"]
+atlas = ExtResource("1_j0tsu")
+region = Rect2(288, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fsujf"]
+atlas = ExtResource("1_j0tsu")
+region = Rect2(336, 0, 48, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6tqrk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1ip0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dwltu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h5d65")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hgvvn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eloty")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yp6to")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_upjqk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fsujf")
+}],
+"loop": true,
+"name": &"Walking",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dklo7"]
+size = Vector2(28, 22)
+
+[node name="Snail" type="CharacterBody2D" groups=["Enemies"]]
+script = ExtResource("1_b1ou3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6tqrk")
+animation = &"Walking"
+frame = 7
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 5)
+shape = SubResource("RectangleShape2D_dklo7")
+
+[node name="HealthAndShieldNode" parent="." instance=ExtResource("3_oso76")]
+
+[connection signal="on_ready" from="HealthAndShieldNode" to="." method="_on_health_and_shield_node_on_ready"]

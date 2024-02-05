@@ -492,7 +492,6 @@ graph_offset = Vector2(-282.725, 63)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
-collision_mask = 9
 script = ExtResource("1_s7pve")
 player_speed = 300.0
 
@@ -567,7 +566,7 @@ Character = NodePath("..")
 
 [node name="Sword" type="Area2D" parent="." groups=["Sword"]]
 collision_layer = 0
-collision_mask = 13
+collision_mask = 5
 monitoring = false
 script = ExtResource("13_j1klm")
 

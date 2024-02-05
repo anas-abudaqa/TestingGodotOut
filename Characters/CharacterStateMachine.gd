@@ -13,7 +13,7 @@ func _ready():
 	## get children under CharacterStateMachine node
 	for child in get_children():
 		##error handling; checking if the child is a state
-		if child is State:
+		if child is State and child.name not in get_parent().locked_abilities:
 			##add to our array
 			states_array.append(child)
 			##define the character they affect
@@ -45,7 +45,7 @@ func _input(event: InputEvent):
 
 func on_state_transition(calling_state : State, next_state : State):
 	#if the state calling the function is not the current state, ignore
-	print("Transitioning from ", current_state, " to", next_state)
+	print("Transitioning from ", current_state, " to ", next_state)
 	if calling_state != current_state:
 		return
 
@@ -60,3 +60,19 @@ func on_state_transition(calling_state : State, next_state : State):
 		
 	else:
 		push_warning("Invalid input for next_state ")
+
+
+func unlock_state(state):
+	if state is State:
+		##add to our array
+		states_array.append(state)
+		##define the character they affect
+		state.character = character
+		state.Transitioned.connect(on_state_transition)
+		state.animation_playback = animation_state_machine["parameters/playback"]
+		
+		## DEBUGGING
+		print(state)
+		## END DEBUGGING
+	else:
+		print("Warning, state " + state + " is not a State ya kos omak")

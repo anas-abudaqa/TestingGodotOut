@@ -1,7 +1,6 @@
 extends State
 
 class_name AttackState
-var animation_is_done = false
 @export var ground_state : GroundState
 
 # Called when the node enters the scene tree for the first time.

@@ -495,6 +495,9 @@ collision_layer = 2
 collision_mask = 9
 script = ExtResource("1_s7pve")
 player_speed = 300.0
+jump_velocity = null
+double_jump_velocity_horizontal = null
+double_jump_velocity_vertical = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 2.875)

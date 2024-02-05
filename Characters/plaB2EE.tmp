@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://crl73xqhs01jq"]
+[gd_scene load_steps=46 format=3 uid="uid://crl73xqhs01jq"]
 
 [ext_resource type="Script" path="res://Characters/player.gd" id="1_s7pve"]
 [ext_resource type="Texture2D" uid="uid://dxfdiqd7iexfk" path="res://Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_vqqqw"]
@@ -12,7 +12,6 @@
 [ext_resource type="Script" path="res://Characters/LandingState.gd" id="9_o346u"]
 [ext_resource type="Script" path="res://Characters/StateDebugLabel.gd" id="10_odruf"]
 [ext_resource type="Script" path="res://Characters/Attack.gd" id="11_ypqh0"]
-[ext_resource type="Script" path="res://Characters/OnWall.gd" id="12_7vwmp"]
 [ext_resource type="Script" path="res://Characters/Sword.gd" id="13_j1klm"]
 [ext_resource type="PackedScene" uid="uid://b0glgx3pu4xre" path="res://Components/health&shield_component.tscn" id="14_1r5y1"]
 
@@ -492,7 +491,6 @@ graph_offset = Vector2(-282.725, 63)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
-collision_mask = 9
 script = ExtResource("1_s7pve")
 player_speed = 300.0
 
@@ -532,11 +530,10 @@ script = ExtResource("7_5t7iy")
 air_state = NodePath("../InAir")
 attack_state = NodePath("../Attack")
 
-[node name="InAir" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state", "landing_state", "onwall_state")]
+[node name="InAir" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state", "landing_state")]
 script = ExtResource("8_0ko3l")
 ground_state = NodePath("../Ground")
 landing_state = NodePath("../Landing")
-onwall_state = NodePath("../OnWall")
 
 [node name="Landing" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state")]
 script = ExtResource("9_o346u")
@@ -550,11 +547,6 @@ can_move = false
 [node name="ComboInputTimer" type="Timer" parent="CharacterStateMachine/Attack"]
 one_shot = true
 
-[node name="OnWall" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("inair_state", "landing_state")]
-script = ExtResource("12_7vwmp")
-inair_state = NodePath("../InAir")
-landing_state = NodePath("../Landing")
-
 [node name="StateDebugLabel" type="Label" parent="." node_paths=PackedStringArray("state_machine", "Character")]
 offset_left = -56.0
 offset_top = -54.0
@@ -567,7 +559,7 @@ Character = NodePath("..")
 
 [node name="Sword" type="Area2D" parent="." groups=["Sword"]]
 collision_layer = 0
-collision_mask = 13
+collision_mask = 5
 monitoring = false
 script = ExtResource("13_j1klm")
 

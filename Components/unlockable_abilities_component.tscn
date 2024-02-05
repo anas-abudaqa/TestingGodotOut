@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bf8lvojsrl7q0"]
+
+[ext_resource type="Texture2D" uid="uid://t83sfe4gy3p3" path="res://Legacy-Fantasy - High Forest 2.3/Green Circle.png" id="1_h0y5e"]
+[ext_resource type="Script" path="res://Components/ability_pickups_component.gd" id="1_l0qse"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vm5bw"]
+radius = 12.0
+
+[node name="PickUp" type="Area2D"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_l0qse")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("1_h0y5e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_vm5bw")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

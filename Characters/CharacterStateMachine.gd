@@ -18,7 +18,9 @@ func _ready():
 			states_array.append(child)
 			##define the character they affect
 			child.character = character
+			##Connect transition function
 			child.Transitioned.connect(on_state_transition)
+			##Connect animation tree
 			child.animation_playback = animation_state_machine["parameters/playback"]
 			
 			## DEBUGGING
@@ -62,13 +64,19 @@ func on_state_transition(calling_state : State, next_state : State):
 		push_warning("Invalid input for next_state ")
 
 
-func unlock_state(state):
+func unlock_state(ability_name):
+	##ability_name is a string, so we use the find_child method to get the node with the matching ability_name
+	var state = find_child(ability_name)
+	
+	##if it is a state
 	if state is State:
 		##add to our array
 		states_array.append(state)
 		##define the character they affect
 		state.character = character
+		##Connect transition function
 		state.Transitioned.connect(on_state_transition)
+		##Connect animation tree
 		state.animation_playback = animation_state_machine["parameters/playback"]
 		
 		## DEBUGGING

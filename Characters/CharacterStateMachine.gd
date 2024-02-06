@@ -12,7 +12,7 @@ var current_state : State
 func _ready():
 	## get children under CharacterStateMachine node
 	for child in get_children():
-		##error handling; checking if the child is a state
+		##checking if the child is a state and if it's not in the characters locked abilities
 		if child is State and child.name not in get_parent().locked_abilities:
 			##add to our array
 			states_array.append(child)

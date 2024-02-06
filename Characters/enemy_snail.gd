@@ -27,7 +27,6 @@ func _physics_process(delta):
 	$HealthAndShieldNode.is_dead()
 	if not is_on_floor():
 		velocity.y += gravity * delta
-
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.d
 	var direction = -1

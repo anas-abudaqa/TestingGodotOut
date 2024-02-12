@@ -11,12 +11,12 @@ var current_health: int
 
 func _ready():
 	$HealthAndShieldNode.health_changed.connect(health_node_health_changed)
-	$HealthAndShieldNode.set_health_and_shield(max_health, false)
+	$HealthAndShieldNode.set_health(max_health)
 	
 func get_damaged(value: int):
 	$HealthAndShieldNode.deal_damage(value)
 	
-func health_node_health_changed(health, shield):
+func health_node_health_changed(health, _max_hp):
 	current_health = health
 
 func _process(delta):

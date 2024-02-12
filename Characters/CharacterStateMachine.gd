@@ -47,10 +47,12 @@ func _input(event: InputEvent):
 
 func on_state_transition(calling_state : State, next_state : State):
 	#if the state calling the function is not the current state, ignore
-	print("Transitioning from ", current_state, " to ", next_state)
 	if calling_state != current_state:
 		return
-
+	if next_state not in states_array:
+		return
+		
+	print("Transitioning from ", current_state, " to ", next_state)
 	## if there is a current state, call on_exit function
 	if current_state:
 		current_state.on_exit()

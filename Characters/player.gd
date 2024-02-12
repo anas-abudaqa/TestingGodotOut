@@ -23,7 +23,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 func _ready():
 	sword_position = $Sword/SwordHitbox.position.x
 	$AnimationTree.active = true
-	$HealthAndShieldNode.set_health_and_shield(max_health, false)
+	$HealthAndShieldNode.set_health(max_health)
 	
 
 func _physics_process(delta):
@@ -58,8 +58,9 @@ func update_orientation():
 		$Sword/SwordHitbox.position.x = -sword_position
 
 
-func _on_health_and_shield_node_health_changed(health, shield):
+func _on_health_and_shield_node_health_changed(health, max_hp):
 	current_health = health
+	max_health = max_hp
 
 
 func _on_pick_up_ability_unlocked(ability_name):

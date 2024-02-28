@@ -3,14 +3,7 @@ extends Area2D
 signal ability_unlocked
 signal ability_locked
 
-var ability_name = "OnWall"
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+@export var ability_name: String
 
 ## use function to set ability name
 func set_ability_name(ability):
@@ -25,6 +18,6 @@ func lock_ability():
 ## on collision, call unlock ability function and delete the pick up
 func _on_body_entered(body):
 	if body.name == "Player":
-		print("Picked up")
+		print("Picked up ", ability_name)
 		unlock_ability()
 		queue_free()

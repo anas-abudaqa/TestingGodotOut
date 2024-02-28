@@ -8,7 +8,7 @@ extends CharacterBody2D
 @export var double_jump_velocity_horizontal: float = 50
 @export var double_jump_velocity_vertical: float = -150
 
-var locked_abilities = ["OnWall"]
+var locked_abilities = ["OnWall", "Dash"]
 var unlocked_abilities = []
 
 var direction: Vector2 = Vector2.ZERO
@@ -24,7 +24,6 @@ func _ready():
 	sword_position = $Sword/SwordHitbox.position.x
 	$AnimationTree.active = true
 	$HealthAndShieldNode.set_health(max_health)
-	
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -58,12 +57,23 @@ func update_orientation():
 		$Sword/SwordHitbox.position.x = -sword_position
 
 
+func get_damaged(value: int):
+	$HealthAndShieldNode.deal_damage(value)
+
 func _on_health_and_shield_node_health_changed(health, max_hp):
 	current_health = health
 	max_health = max_hp
 
 
 func _on_pick_up_ability_unlocked(ability_name):
+	locked_abilities.erase(ability_name)
+	unlocked_abilities.append(ability_name)
+	$CharacterStateMachine.unlock_state(ability_name)
+	print(unlocked_abilities)
+
+
+func _on_dash_pick_up_ability_unlocked(ability_name):
+	
 	locked_abilities.erase(ability_name)
 	unlocked_abilities.append(ability_name)
 	$CharacterStateMachine.unlock_state(ability_name)

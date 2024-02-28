@@ -15,7 +15,7 @@ func _ready():
 	pass # Replace with function body.
 
 func on_enter():
-	pass
+	inair_state.has_double_jumped = false
 
 func state_process(delta):
 	if character.is_on_wall_only:

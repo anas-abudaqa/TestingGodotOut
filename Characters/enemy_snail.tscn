@@ -1,10 +1,16 @@
-[gd_scene load_steps=27 format=3 uid="uid://dhi3eab0pj2k6"]
+[gd_scene load_steps=28 format=3 uid="uid://dhi3eab0pj2k6"]
 
 [ext_resource type="Script" path="res://Characters/enemy_snail.gd" id="1_b1ou3"]
 [ext_resource type="Texture2D" uid="uid://t358w2c3xeqk" path="res://Legacy-Fantasy - High Forest 2.3/Mob/Snail/walk-Sheet.png" id="1_j0tsu"]
 [ext_resource type="Texture2D" uid="uid://b5my4wr48k1s1" path="res://Legacy-Fantasy - High Forest 2.3/Mob/Snail/Dead-Sheet.png" id="2_2clgg"]
 [ext_resource type="PackedScene" uid="uid://b0glgx3pu4xre" path="res://Components/health&shield_component.tscn" id="3_oso76"]
 [ext_resource type="Script" path="res://Characters/SnailHealthLabel.gd" id="4_3fjoo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dklo7"]
+size = Vector2(28, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cc5re"]
+size = Vector2(300, 110)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gg7cy"]
 atlas = ExtResource("2_2clgg")
@@ -157,13 +163,26 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dklo7"]
-size = Vector2(28, 22)
-
 [node name="Snail" type="CharacterBody2D" groups=["Damageable", "Enemies"]]
 collision_layer = 4
-collision_mask = 5
+collision_mask = 3
 script = ExtResource("1_b1ou3")
+
+[node name="CollisionShape" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionShape"]
+position = Vector2(-1, 5)
+shape = SubResource("RectangleShape2D_dklo7")
+
+[node name="Aggro area" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Aggro area"]
+position = Vector2(0, -55)
+shape = SubResource("RectangleShape2D_cc5re")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_6tqrk")
@@ -178,12 +197,20 @@ shape = SubResource("RectangleShape2D_dklo7")
 [node name="HealthAndShieldNode" parent="." instance=ExtResource("3_oso76")]
 
 [node name="SnailHealthLabel" type="Label" parent="." node_paths=PackedStringArray("Character")]
-offset_left = -24.0
-offset_top = -28.0
-offset_right = 16.0
-offset_bottom = -5.0
+offset_left = -23.0
+offset_top = -29.0
+offset_right = 17.0
+offset_bottom = -6.0
 text = "HP: "
 script = ExtResource("4_3fjoo")
 Character = NodePath("..")
 
+[node name="RoamingTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 5.0
+
+[connection signal="body_entered" from="CollisionShape" to="." method="_on_collision_shape_body_entered"]
+[connection signal="body_entered" from="Aggro area" to="." method="_on_aggro_area_body_entered"]
+[connection signal="body_exited" from="Aggro area" to="." method="_on_aggro_area_body_exited"]
 [connection signal="has_died" from="HealthAndShieldNode" to="." method="_on_health_and_shield_node_has_died"]
+[connection signal="timeout" from="RoamingTimer" to="." method="_on_roaming_timer_timeout"]

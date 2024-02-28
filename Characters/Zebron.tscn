@@ -1,0 +1,84 @@
+[gd_scene load_steps=12 format=3 uid="uid://0stnqh4hd55c"]
+
+[ext_resource type="Texture2D" uid="uid://cf7w6505b4t6x" path="res://Art/Ars_Notoria_Enemies/mage-1-85x94.png" id="1_qyu8q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sobi5"]
+size = Vector2(34, 85.25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0tcce"]
+atlas = ExtResource("1_qyu8q")
+region = Rect2(0, 0, 85, 94)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfo43"]
+atlas = ExtResource("1_qyu8q")
+region = Rect2(85, 0, 85, 94)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gw0c0"]
+atlas = ExtResource("1_qyu8q")
+region = Rect2(170, 0, 85, 94)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fpebu"]
+atlas = ExtResource("1_qyu8q")
+region = Rect2(255, 0, 85, 94)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q2mm5"]
+atlas = ExtResource("1_qyu8q")
+region = Rect2(0, 94, 85, 94)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_52yxh"]
+atlas = ExtResource("1_qyu8q")
+region = Rect2(85, 94, 85, 94)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7fnn"]
+atlas = ExtResource("1_qyu8q")
+region = Rect2(170, 94, 85, 94)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nl28j"]
+atlas = ExtResource("1_qyu8q")
+region = Rect2(255, 94, 85, 94)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p8fay"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0tcce")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wfo43")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gw0c0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fpebu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q2mm5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52yxh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g7fnn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nl28j")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[node name="Zebron" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 17
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2.625)
+shape = SubResource("RectangleShape2D_sobi5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_p8fay")
+animation = &"Idle"
+autoplay = "Idle"
+frame_progress = 0.576945

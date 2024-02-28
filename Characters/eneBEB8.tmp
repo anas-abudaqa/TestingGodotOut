@@ -1,0 +1,212 @@
+[gd_scene load_steps=28 format=3 uid="uid://dhi3eab0pj2k6"]
+
+[ext_resource type="Script" path="res://Characters/enemy_snail.gd" id="1_b1ou3"]
+[ext_resource type="Texture2D" uid="uid://t358w2c3xeqk" path="res://Legacy-Fantasy - High Forest 2.3/Mob/Snail/walk-Sheet.png" id="1_j0tsu"]
+[ext_resource type="Texture2D" uid="uid://b5my4wr48k1s1" path="res://Legacy-Fantasy - High Forest 2.3/Mob/Snail/Dead-Sheet.png" id="2_2clgg"]
+[ext_resource type="PackedScene" uid="uid://b0glgx3pu4xre" path="res://Components/health&shield_component.tscn" id="3_oso76"]
+[ext_resource type="Script" path="res://Characters/SnailHealthLabel.gd" id="4_3fjoo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cc5re"]
+size = Vector2(50, 170.25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gg7cy"]
+atlas = ExtResource("2_2clgg")
+region = Rect2(0, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6tdc"]
+atlas = ExtResource("2_2clgg")
+region = Rect2(48, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vhlxk"]
+atlas = ExtResource("2_2clgg")
+region = Rect2(96, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e2et5"]
+atlas = ExtResource("2_2clgg")
+region = Rect2(144, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bafue"]
+atlas = ExtResource("2_2clgg")
+region = Rect2(192, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rijcw"]
+atlas = ExtResource("2_2clgg")
+region = Rect2(240, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f8xeb"]
+atlas = ExtResource("2_2clgg")
+region = Rect2(288, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6nwn5"]
+atlas = ExtResource("2_2clgg")
+region = Rect2(336, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ampe"]
+atlas = ExtResource("1_j0tsu")
+region = Rect2(0, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1h2ff"]
+atlas = ExtResource("1_j0tsu")
+region = Rect2(48, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_73prd"]
+atlas = ExtResource("1_j0tsu")
+region = Rect2(96, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1ip0"]
+atlas = ExtResource("1_j0tsu")
+region = Rect2(0, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwltu"]
+atlas = ExtResource("1_j0tsu")
+region = Rect2(48, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h5d65"]
+atlas = ExtResource("1_j0tsu")
+region = Rect2(96, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hgvvn"]
+atlas = ExtResource("1_j0tsu")
+region = Rect2(144, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eloty"]
+atlas = ExtResource("1_j0tsu")
+region = Rect2(192, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yp6to"]
+atlas = ExtResource("1_j0tsu")
+region = Rect2(240, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_upjqk"]
+atlas = ExtResource("1_j0tsu")
+region = Rect2(288, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fsujf"]
+atlas = ExtResource("1_j0tsu")
+region = Rect2(336, 0, 48, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6tqrk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gg7cy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6tdc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vhlxk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e2et5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bafue")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rijcw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f8xeb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6nwn5")
+}],
+"loop": false,
+"name": &"Death",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ampe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1h2ff")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_73prd")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1ip0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dwltu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h5d65")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hgvvn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eloty")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yp6to")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_upjqk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fsujf")
+}],
+"loop": true,
+"name": &"Walking",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dklo7"]
+size = Vector2(28, 22)
+
+[node name="Snail" type="CharacterBody2D" groups=["Damageable", "Enemies"]]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_b1ou3")
+
+[node name="Aggro area" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Aggro area"]
+position = Vector2(-0.5, -92.125)
+shape = SubResource("RectangleShape2D_cc5re")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6tqrk")
+animation = &"Death"
+frame = 7
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 5)
+shape = SubResource("RectangleShape2D_dklo7")
+
+[node name="HealthAndShieldNode" parent="." instance=ExtResource("3_oso76")]
+
+[node name="SnailHealthLabel" type="Label" parent="." node_paths=PackedStringArray("Character")]
+offset_left = -23.0
+offset_top = -29.0
+offset_right = 17.0
+offset_bottom = -6.0
+text = "HP: "
+script = ExtResource("4_3fjoo")
+Character = NodePath("..")
+
+[node name="RoamingTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 5.0
+
+[node name="RoamingIdleTimer" type="Timer" parent="."]
+process_callback = 0
+one_shot = true
+
+[connection signal="body_entered" from="Aggro area" to="." method="_on_aggro_area_body_entered"]
+[connection signal="body_exited" from="Aggro area" to="." method="_on_aggro_area_body_exited"]
+[connection signal="has_died" from="HealthAndShieldNode" to="." method="_on_health_and_shield_node_has_died"]
+[connection signal="timeout" from="RoamingTimer" to="." method="_on_roaming_timer_timeout"]
+[connection signal="timeout" from="RoamingIdleTimer" to="." method="_on_roaming_idle_timer_timeout"]

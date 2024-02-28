@@ -542,9 +542,9 @@ states/landing/position = Vector2(594.275, 100)
 transitions = ["Start", "Move", SubResource("AnimationNodeStateMachineTransition_0kfp6"), "jump", "double_jump", SubResource("AnimationNodeStateMachineTransition_gljdm"), "Move", "jump", SubResource("AnimationNodeStateMachineTransition_twn2r"), "landing", "Move", SubResource("AnimationNodeStateMachineTransition_f0yyu"), "jump", "landing", SubResource("AnimationNodeStateMachineTransition_70xr3"), "double_jump", "landing", SubResource("AnimationNodeStateMachineTransition_sxh4j"), "Move", "attack1", SubResource("AnimationNodeStateMachineTransition_3wcjo"), "attack1", "Move", SubResource("AnimationNodeStateMachineTransition_u2n58"), "attack1", "attack2", SubResource("AnimationNodeStateMachineTransition_cs2nn"), "attack2", "Move", SubResource("AnimationNodeStateMachineTransition_6vk4o"), "Move", "dashing", SubResource("AnimationNodeStateMachineTransition_4brj5"), "dashing", "Move", SubResource("AnimationNodeStateMachineTransition_kj4yy")]
 graph_offset = Vector2(-528.725, -21)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
-collision_mask = 9
+collision_mask = 13
 script = ExtResource("1_s7pve")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -610,9 +610,10 @@ landing_state = NodePath("../Landing")
 [node name="Dash" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state")]
 script = ExtResource("13_drhut")
 ground_state = NodePath("../Ground")
+can_move = false
 
 [node name="DashTimer" type="Timer" parent="CharacterStateMachine/Dash"]
-wait_time = 0.5
+wait_time = 0.1
 one_shot = true
 
 [node name="StateDebugLabel" type="Label" parent="." node_paths=PackedStringArray("state_machine", "Character")]
@@ -627,7 +628,7 @@ Character = NodePath("..")
 
 [node name="Sword" type="Area2D" parent="." groups=["Sword"]]
 collision_layer = 0
-collision_mask = 13
+collision_mask = 4
 monitoring = false
 script = ExtResource("13_j1klm")
 

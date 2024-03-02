@@ -72,7 +72,7 @@ func roam_around():
 	if $RoamingTimer.is_stopped():
 		$RoamingTimer.start()
 		direction *= -1
-		print("Starting direction ", direction)
+		
 
 func aggro_player():
 	$RoamingTimer.stop()
@@ -99,7 +99,7 @@ func _on_aggro_area_body_exited(body):
 
 func _on_roaming_timer_timeout():
 	direction *= -1
-	print("Roam: ", direction)
+	#print("Roam: ", direction)
 #
 
 	

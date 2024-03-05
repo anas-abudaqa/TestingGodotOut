@@ -15,4 +15,4 @@ func _process(delta):
 
 func _on_body_entered(body):
 	if body.is_in_group("Damageable"):
-		body.get_damaged(damage)
+		body.take_damage(damage)

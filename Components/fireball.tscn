@@ -1,0 +1,81 @@
+[gd_scene load_steps=11 format=3 uid="uid://beknl6jkdmxld"]
+
+[ext_resource type="Script" path="res://Components/Scripts/fireball.gd" id="1_cuh2v"]
+[ext_resource type="Texture2D" uid="uid://chdijhdgyp1op" path="res://Art/fireball.png" id="1_wbdru"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2hedb"]
+atlas = ExtResource("1_wbdru")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pq1tp"]
+atlas = ExtResource("1_wbdru")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_li7lo"]
+atlas = ExtResource("1_wbdru")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ch6u"]
+atlas = ExtResource("1_wbdru")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6bkqe"]
+atlas = ExtResource("1_wbdru")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kr152"]
+atlas = ExtResource("1_wbdru")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gvipa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2hedb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pq1tp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_li7lo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ch6u")
+}],
+"loop": false,
+"name": &"initial",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6bkqe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kr152")
+}],
+"loop": true,
+"name": &"travel",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s1nuc"]
+size = Vector2(29, 28)
+
+[node name="Fireball" type="Area2D"]
+collision_layer = 32
+collision_mask = 37
+script = ExtResource("1_cuh2v")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_gvipa")
+animation = &"travel"
+autoplay = "initial"
+frame_progress = 0.438019
+flip_h = true
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2(14, 1)
+shape = SubResource("RectangleShape2D_s1nuc")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

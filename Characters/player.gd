@@ -8,7 +8,7 @@ extends CharacterBody2D
 @export var double_jump_velocity_horizontal: float = 50
 @export var double_jump_velocity_vertical: float = -150
 
-var locked_abilities = ["OnWall", "Dash"]
+var locked_abilities = ["OnWall", "Dash", "Fireball"]
 var unlocked_abilities = []
 
 var direction: Vector2 = Vector2.ZERO
@@ -26,6 +26,7 @@ func _ready():
 	$HealthAndShieldNode.set_health(max_health)
 
 func _physics_process(delta):
+	$HealthAndShieldNode.is_dead()
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -57,8 +58,14 @@ func update_orientation():
 		$Sword/SwordHitbox.position.x = -sword_position
 
 
-func get_damaged(value: int):
+func take_damage(value: int):
 	$HealthAndShieldNode.deal_damage(value)
+
+func unlock_ability(ability_name: String):
+	locked_abilities.erase(ability_name)
+	unlocked_abilities.append(ability_name)
+	$CharacterStateMachine.unlock_state(ability_name)
+	print(unlocked_abilities)
 
 func _on_health_and_shield_node_health_changed(health, max_hp):
 	current_health = health
@@ -73,8 +80,23 @@ func _on_pick_up_ability_unlocked(ability_name):
 
 
 func _on_dash_pick_up_ability_unlocked(ability_name):
-	
 	locked_abilities.erase(ability_name)
 	unlocked_abilities.append(ability_name)
 	$CharacterStateMachine.unlock_state(ability_name)
 	print(unlocked_abilities)
+
+
+func _on_fireball_pick_up_ability_unlocked(ability_name):
+	unlock_ability(ability_name)
+
+
+func _on_terrain_detector_entered_lava():
+	take_damage(current_health)
+
+
+func _on_terrain_detector_entered_spikes():
+	take_damage(20)
+
+
+func _on_health_and_shield_node_has_died():
+	print("Dead")

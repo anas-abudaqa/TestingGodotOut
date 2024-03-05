@@ -37,4 +37,4 @@ func on_exit():
 
 func _on_dash_timer_timeout():
 	animation_playback.travel("Move")
-	Transitioned.emit(self, ground_state)
+	Transitioned.emit(self, previous_state)

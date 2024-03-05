@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://crl73xqhs01jq"]
+[gd_scene load_steps=55 format=3 uid="uid://crl73xqhs01jq"]
 
 [ext_resource type="Script" path="res://Characters/player.gd" id="1_s7pve"]
 [ext_resource type="Texture2D" uid="uid://dxfdiqd7iexfk" path="res://Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_vqqqw"]
@@ -16,6 +16,8 @@
 [ext_resource type="Script" path="res://Characters/Dash.gd" id="13_drhut"]
 [ext_resource type="Script" path="res://Characters/Sword.gd" id="13_j1klm"]
 [ext_resource type="PackedScene" uid="uid://b0glgx3pu4xre" path="res://Components/health&shield_component.tscn" id="14_1r5y1"]
+[ext_resource type="Script" path="res://Characters/Player/FireballState.gd" id="14_g1he7"]
+[ext_resource type="Script" path="res://Components/Scripts/TerrainDetector.gd" id="16_kh1a1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8saj5"]
 size = Vector2(17, 41.75)
@@ -542,13 +544,15 @@ states/landing/position = Vector2(594.275, 100)
 transitions = ["Start", "Move", SubResource("AnimationNodeStateMachineTransition_0kfp6"), "jump", "double_jump", SubResource("AnimationNodeStateMachineTransition_gljdm"), "Move", "jump", SubResource("AnimationNodeStateMachineTransition_twn2r"), "landing", "Move", SubResource("AnimationNodeStateMachineTransition_f0yyu"), "jump", "landing", SubResource("AnimationNodeStateMachineTransition_70xr3"), "double_jump", "landing", SubResource("AnimationNodeStateMachineTransition_sxh4j"), "Move", "attack1", SubResource("AnimationNodeStateMachineTransition_3wcjo"), "attack1", "Move", SubResource("AnimationNodeStateMachineTransition_u2n58"), "attack1", "attack2", SubResource("AnimationNodeStateMachineTransition_cs2nn"), "attack2", "Move", SubResource("AnimationNodeStateMachineTransition_6vk4o"), "Move", "dashing", SubResource("AnimationNodeStateMachineTransition_4brj5"), "dashing", "Move", SubResource("AnimationNodeStateMachineTransition_kj4yy")]
 graph_offset = Vector2(-528.725, -21)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0kxwk"]
+size = Vector2(16.25, 8.5)
+
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
 collision_mask = 13
 script = ExtResource("1_s7pve")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 2.875)
 shape = SubResource("RectangleShape2D_8saj5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -578,17 +582,20 @@ character = NodePath("..")
 animation_state_machine = NodePath("../AnimationTree")
 initial_state = NodePath("Ground")
 
-[node name="Ground" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "attack_state", "dash_state")]
+[node name="Ground" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "attack_state", "dash_state", "fireball_state")]
 script = ExtResource("7_5t7iy")
 air_state = NodePath("../InAir")
 attack_state = NodePath("../Attack")
 dash_state = NodePath("../Dash")
+fireball_state = NodePath("../Fireball")
 
-[node name="InAir" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state", "landing_state", "onwall_state")]
+[node name="InAir" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state", "landing_state", "onwall_state", "fireball_state", "dash_state")]
 script = ExtResource("8_0ko3l")
 ground_state = NodePath("../Ground")
 landing_state = NodePath("../Landing")
 onwall_state = NodePath("../OnWall")
+fireball_state = NodePath("../Fireball")
+dash_state = NodePath("../Dash")
 
 [node name="Landing" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state")]
 script = ExtResource("9_o346u")
@@ -616,6 +623,18 @@ can_move = false
 wait_time = 0.1
 one_shot = true
 
+[node name="Fireball" type="Node" parent="CharacterStateMachine"]
+script = ExtResource("14_g1he7")
+can_move = false
+
+[node name="FrameLockedTimer" type="Timer" parent="CharacterStateMachine/Fireball"]
+wait_time = 0.5
+one_shot = true
+
+[node name="CooldownTimer" type="Timer" parent="CharacterStateMachine/Fireball"]
+wait_time = 0.7
+one_shot = true
+
 [node name="StateDebugLabel" type="Label" parent="." node_paths=PackedStringArray("state_machine", "Character")]
 offset_left = -56.0
 offset_top = -54.0
@@ -625,6 +644,13 @@ text = "State:"
 script = ExtResource("10_odruf")
 state_machine = NodePath("../CharacterStateMachine")
 Character = NodePath("..")
+
+[node name="TerrainDetector" type="Area2D" parent="."]
+script = ExtResource("16_kh1a1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainDetector"]
+position = Vector2(-1.125, 20.25)
+shape = SubResource("RectangleShape2D_0kxwk")
 
 [node name="Sword" type="Area2D" parent="." groups=["Sword"]]
 collision_layer = 0
@@ -642,5 +668,10 @@ shape = SubResource("RectangleShape2D_81r7m")
 [connection signal="animation_player_changed" from="AnimationTree" to="." method="_on_animation_tree_animation_player_changed"]
 [connection signal="timeout" from="CharacterStateMachine/Attack/ComboInputTimer" to="CharacterStateMachine/Attack" method="_on_combo_input_timer_timeout"]
 [connection signal="timeout" from="CharacterStateMachine/Dash/DashTimer" to="CharacterStateMachine/Dash" method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="CharacterStateMachine/Fireball/CooldownTimer" to="CharacterStateMachine/Fireball" method="_on_cooldown_timer_timeout"]
+[connection signal="body_shape_entered" from="TerrainDetector" to="TerrainDetector" method="_on_body_shape_entered"]
+[connection signal="entered_lava" from="TerrainDetector" to="." method="_on_terrain_detector_entered_lava"]
+[connection signal="entered_spikes" from="TerrainDetector" to="." method="_on_terrain_detector_entered_spikes"]
 [connection signal="body_entered" from="Sword" to="Sword" method="_on_body_entered"]
+[connection signal="has_died" from="HealthAndShieldNode" to="." method="_on_health_and_shield_node_has_died"]
 [connection signal="health_changed" from="HealthAndShieldNode" to="." method="_on_health_and_shield_node_health_changed"]

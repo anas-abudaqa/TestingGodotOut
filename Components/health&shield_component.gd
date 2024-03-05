@@ -61,5 +61,6 @@ func increase_max_shield(max_shield_boost: int):
 
 func is_dead():
 	if current_health <= 0:
+		current_health = 0
 		has_died.emit() ##emit more information?
 		

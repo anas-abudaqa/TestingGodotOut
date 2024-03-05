@@ -48,22 +48,24 @@ func _input(event: InputEvent):
 func on_state_transition(calling_state : State, next_state : State):
 	#if the state calling the function is not the current state, ignore
 	if calling_state != current_state:
+		print("Error: Next state - ", next_state, " - is not in the State Array")
 		return
 	if next_state not in states_array:
+		print("Error: Next state - ", next_state, " - is not in the State Array")
 		return
 		
 	print("Transitioning from ", current_state, " to ", next_state)
-	## if there is a current state, call on_exit function
-	if current_state:
-		current_state.on_exit()
-		
-	## call next states	and its on_enter function
-	if next_state in states_array:
-		next_state.on_enter()
-		current_state = next_state
-		
-	else:
-		push_warning("Invalid input for next_state ")
+	
+	## Call on_exit function of current state
+	current_state.on_exit()
+	
+	## Store current_state as previous state of the next_state
+	next_state.previous_state = current_state
+	
+	# change current_state to next_state
+	current_state = next_state
+	## call the on_enter function of our new current_state
+	current_state.on_enter()
 
 
 func unlock_state(ability_name):

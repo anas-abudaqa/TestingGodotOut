@@ -53,7 +53,7 @@ func update_orientation():
 		#$Sword.position.x *= -1
 
 
-func get_damaged(value: int):
+func take_damage(value: int):
 	$HealthAndShieldNode.deal_damage(value)
 	
 func health_node_health_changed(health, _max_hp):
@@ -107,4 +107,4 @@ func _on_roaming_timer_timeout():
 ##Not working properly
 func _on_collision_shape_body_entered(body):
 	if body.is_in_group("Player"):
-		body.get_damaged(contact_damage)
+		body.take_damage(contact_damage)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://ivicpf1vfv6y"]
+[gd_scene load_steps=27 format=3 uid="uid://ivicpf1vfv6y"]
 
 [ext_resource type="Texture2D" uid="uid://bgyv50apn6swc" path="res://Art/Ars_Notoria_Enemies/andromalius-57x88.png" id="1_c6yst"]
 [ext_resource type="Script" path="res://Characters/The_Slime/Scripts/the_slime.gd" id="1_q4hr7"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://Characters/The_Slime/Scripts/AcidShotState.gd" id="4_3hbiv"]
 [ext_resource type="Script" path="res://Characters/The_Slime/Scripts/MoveState.gd" id="5_dxpto"]
 [ext_resource type="Script" path="res://Characters/The_Slime/Scripts/DebugStateLabel.gd" id="6_ksbix"]
-[ext_resource type="Script" path="res://Characters/The_Slime/Scripts/ChasePlayerState.gd" id="6_pry6y"]
 [ext_resource type="Script" path="res://Characters/The_Slime/Scripts/IdleState.gd" id="6_y8mrc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jsvn8"]
@@ -144,9 +143,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="TheSlime" type="CharacterBody2D" groups=["Damageable"]]
-collision_layer = 4
-collision_mask = 35
+[node name="TheSlime" type="CharacterBody2D"]
 script = ExtResource("1_q4hr7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -156,50 +153,30 @@ shape = SubResource("RectangleShape2D_jsvn8")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_qe6m0")
 animation = &"Fire"
-frame_progress = 0.341973
-flip_h = true
 
-[node name="CharacterStateMachine" type="Node" parent="." node_paths=PackedStringArray("animated_sprite", "character", "initial_state")]
+[node name="CharacterStateMachine" type="Node" parent="." node_paths=PackedStringArray("character", "initial_state")]
 script = ExtResource("3_oh26w")
-animated_sprite = NodePath("../AnimatedSprite2D")
 character = NodePath("..")
 initial_state = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("move_state")]
-script = ExtResource("6_y8mrc")
-move_state = NodePath("../Move")
+[node name="AcidShot" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("move_state")]
+script = ExtResource("4_3hbiv")
+move_state = NodePath("../MoveHorizontally")
 
-[node name="RestTimer" type="Timer" parent="CharacterStateMachine/Idle"]
-wait_time = 3.0
-
-[node name="Move" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("chaseplayer_state", "idle_state")]
-script = ExtResource("5_dxpto")
-chaseplayer_state = NodePath("../ChasePlayer")
-idle_state = NodePath("../Idle")
-
-[node name="HorizontalMovementTimer" type="Timer" parent="CharacterStateMachine/Move"]
-wait_time = 10.0
-one_shot = true
-
-[node name="VerticalMovementTimer" type="Timer" parent="CharacterStateMachine/Move"]
+[node name="CooldownTimer" type="Timer" parent="CharacterStateMachine/AcidShot"]
 wait_time = 5.0
 one_shot = true
 
-[node name="ChasePlayer" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("acidshot_state")]
-script = ExtResource("6_pry6y")
+[node name="MoveHorizontally" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("acidshot_state")]
+script = ExtResource("5_dxpto")
 acidshot_state = NodePath("../AcidShot")
 
-[node name="ChaseTimer" type="Timer" parent="CharacterStateMachine/ChasePlayer"]
-wait_time = 2.0
-one_shot = true
+[node name="Idle" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("animatedsprite")]
+script = ExtResource("6_y8mrc")
+animatedsprite = NodePath("../../AnimatedSprite2D")
 
-[node name="AcidShot" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("idle_state")]
-script = ExtResource("4_3hbiv")
-idle_state = NodePath("../Idle")
-
-[node name="CooldownTimer" type="Timer" parent="CharacterStateMachine/AcidShot"]
-wait_time = 0.5
-one_shot = true
+[node name="RestTimer" type="Timer" parent="CharacterStateMachine/Idle"]
+wait_time = 4.0
 
 [node name="StateDebugLabel" type="Label" parent="." node_paths=PackedStringArray("state_machine", "Character")]
 offset_left = -21.0
@@ -210,9 +187,4 @@ script = ExtResource("6_ksbix")
 state_machine = NodePath("../CharacterStateMachine")
 Character = NodePath("..")
 
-[connection signal="timeout" from="CharacterStateMachine/Idle/RestTimer" to="CharacterStateMachine/Idle" method="_on_rest_timer_timeout"]
-[connection signal="timeout" from="CharacterStateMachine/Move/HorizontalMovementTimer" to="CharacterStateMachine/Move" method="_on_horizontal_movement_timer_timeout"]
-[connection signal="timeout" from="CharacterStateMachine/Move/HorizontalMovementTimer" to="CharacterStateMachine/Move" method="_on_timer_timeout"]
-[connection signal="timeout" from="CharacterStateMachine/Move/VerticalMovementTimer" to="CharacterStateMachine/Move" method="_on_vertical_movement_timer_timeout"]
-[connection signal="timeout" from="CharacterStateMachine/ChasePlayer/ChaseTimer" to="CharacterStateMachine/ChasePlayer" method="_on_chase_timer_timeout"]
 [connection signal="timeout" from="CharacterStateMachine/AcidShot/CooldownTimer" to="CharacterStateMachine/AcidShot" method="_on_cool_down_timer_timeout"]

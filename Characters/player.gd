@@ -99,4 +99,4 @@ func _on_terrain_detector_entered_spikes():
 
 
 func _on_health_and_shield_node_has_died():
-	print("Dead")
+	current_health = 0

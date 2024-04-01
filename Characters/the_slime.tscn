@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://ivicpf1vfv6y"]
+[gd_scene load_steps=34 format=3 uid="uid://ivicpf1vfv6y"]
 
 [ext_resource type="Texture2D" uid="uid://bgyv50apn6swc" path="res://Art/Ars_Notoria_Enemies/andromalius-57x88.png" id="1_c6yst"]
 [ext_resource type="Script" path="res://Characters/The_Slime/Scripts/the_slime.gd" id="1_q4hr7"]
@@ -8,9 +8,26 @@
 [ext_resource type="Script" path="res://Characters/The_Slime/Scripts/DebugStateLabel.gd" id="6_ksbix"]
 [ext_resource type="Script" path="res://Characters/The_Slime/Scripts/ChasePlayerState.gd" id="6_pry6y"]
 [ext_resource type="Script" path="res://Characters/The_Slime/Scripts/IdleState.gd" id="6_y8mrc"]
+[ext_resource type="PackedScene" uid="uid://b0glgx3pu4xre" path="res://Components/health&shield_component.tscn" id="9_r45fd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jsvn8"]
-size = Vector2(42, 75)
+size = Vector2(38, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxewl"]
+atlas = ExtResource("1_c6yst")
+region = Rect2(171, 176, 57, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xk1ru"]
+atlas = ExtResource("1_c6yst")
+region = Rect2(114, 176, 57, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_27rnp"]
+atlas = ExtResource("1_c6yst")
+region = Rect2(57, 176, 57, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_or847"]
+atlas = ExtResource("1_c6yst")
+region = Rect2(0, 176, 57, 88)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xvibx"]
 atlas = ExtResource("1_c6yst")
@@ -84,6 +101,47 @@ region = Rect2(399, 0, 57, 88)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_mxewl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xk1ru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_27rnp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_or847")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_27rnp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xk1ru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mxewl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xk1ru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_27rnp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_or847")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_27rnp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xk1ru")
+}],
+"loop": false,
+"name": &"Death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_xvibx")
 }, {
 "duration": 1.0,
@@ -144,19 +202,24 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x523f"]
+radius = 21.0
+height = 74.0
+
 [node name="TheSlime" type="CharacterBody2D" groups=["Damageable"]]
 collision_layer = 4
 collision_mask = 35
 script = ExtResource("1_q4hr7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, -6.5)
+position = Vector2(-1, -6)
 shape = SubResource("RectangleShape2D_jsvn8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_qe6m0")
-animation = &"Fire"
-frame_progress = 0.341973
+animation = &"Death"
+frame = 11
+frame_progress = 1.0
 flip_h = true
 
 [node name="CharacterStateMachine" type="Node" parent="." node_paths=PackedStringArray("animated_sprite", "character", "initial_state")]
@@ -171,11 +234,12 @@ move_state = NodePath("../Move")
 
 [node name="RestTimer" type="Timer" parent="CharacterStateMachine/Idle"]
 wait_time = 3.0
+one_shot = true
 
-[node name="Move" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("chaseplayer_state", "idle_state")]
+[node name="Move" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("chaseplayer_state", "acidshot_state")]
 script = ExtResource("5_dxpto")
 chaseplayer_state = NodePath("../ChasePlayer")
-idle_state = NodePath("../Idle")
+acidshot_state = NodePath("../AcidShot")
 
 [node name="HorizontalMovementTimer" type="Timer" parent="CharacterStateMachine/Move"]
 wait_time = 10.0
@@ -190,29 +254,40 @@ script = ExtResource("6_pry6y")
 acidshot_state = NodePath("../AcidShot")
 
 [node name="ChaseTimer" type="Timer" parent="CharacterStateMachine/ChasePlayer"]
-wait_time = 2.0
+wait_time = 0.5
 one_shot = true
 
 [node name="AcidShot" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("idle_state")]
 script = ExtResource("4_3hbiv")
 idle_state = NodePath("../Idle")
+can_move = false
 
 [node name="CooldownTimer" type="Timer" parent="CharacterStateMachine/AcidShot"]
-wait_time = 0.5
 one_shot = true
 
 [node name="StateDebugLabel" type="Label" parent="." node_paths=PackedStringArray("state_machine", "Character")]
-offset_left = -21.0
-offset_top = -67.0
-offset_right = 19.0
-offset_bottom = -44.0
+offset_left = -37.0
+offset_top = -91.0
+offset_right = 37.0
+offset_bottom = -56.0
 script = ExtResource("6_ksbix")
 state_machine = NodePath("../CharacterStateMachine")
 Character = NodePath("..")
 
+[node name="HealthAndShieldNode" parent="." instance=ExtResource("9_r45fd")]
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(-1, -6)
+shape = SubResource("CapsuleShape2D_x523f")
+
 [connection signal="timeout" from="CharacterStateMachine/Idle/RestTimer" to="CharacterStateMachine/Idle" method="_on_rest_timer_timeout"]
-[connection signal="timeout" from="CharacterStateMachine/Move/HorizontalMovementTimer" to="CharacterStateMachine/Move" method="_on_horizontal_movement_timer_timeout"]
 [connection signal="timeout" from="CharacterStateMachine/Move/HorizontalMovementTimer" to="CharacterStateMachine/Move" method="_on_timer_timeout"]
+[connection signal="timeout" from="CharacterStateMachine/Move/HorizontalMovementTimer" to="CharacterStateMachine/Move" method="_on_horizontal_movement_timer_timeout"]
 [connection signal="timeout" from="CharacterStateMachine/Move/VerticalMovementTimer" to="CharacterStateMachine/Move" method="_on_vertical_movement_timer_timeout"]
 [connection signal="timeout" from="CharacterStateMachine/ChasePlayer/ChaseTimer" to="CharacterStateMachine/ChasePlayer" method="_on_chase_timer_timeout"]
 [connection signal="timeout" from="CharacterStateMachine/AcidShot/CooldownTimer" to="CharacterStateMachine/AcidShot" method="_on_cool_down_timer_timeout"]
+[connection signal="has_died" from="HealthAndShieldNode" to="." method="_on_health_and_shield_node_has_died"]
+[connection signal="health_changed" from="HealthAndShieldNode" to="." method="_on_health_and_shield_node_health_changed"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

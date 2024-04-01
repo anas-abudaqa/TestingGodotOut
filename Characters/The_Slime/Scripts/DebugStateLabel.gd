@@ -12,3 +12,5 @@ func _process(delta):
 	text = "State: " + str(state_machine.current_state.name)
 	text += "
 	#Aggrod: " + str(Character.aggrod)
+	text += "
+	HP: " + str(Character.current_health)

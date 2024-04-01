@@ -10,12 +10,12 @@ func state_process(delta):
 	if $ChaseTimer.is_stopped():
 		character.direction.x = 0
 		$ChaseTimer.start()
-	##player is below this character
-	if character.playerbody.position.y - character.position.y > 32:
-		character.direction.y = +1
-	##player is above this character
-	if character.playerbody.position.y - character.position.y < -32:
-		character.direction.y = -1
+	###player is below this character
+	#if character.playerbody.position.y - character.position.y > 32:
+		#character.direction.y = +1
+	###player is above this character
+	#if character.playerbody.position.y - character.position.y < -32:
+		#character.direction.y = -1
 	face_player()
 	
 

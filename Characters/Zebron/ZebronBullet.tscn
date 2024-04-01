@@ -1,0 +1,115 @@
+[gd_scene load_steps=15 format=3 uid="uid://b720jy4d2wp8l"]
+
+[ext_resource type="Texture2D" uid="uid://dwc81kqwb4l5c" path="res://Art/ZebronShot.png" id="1_njnj2"]
+[ext_resource type="Script" path="res://Characters/Zebron/Scripts/ZebronBullet.gd" id="1_om4b2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k61kj"]
+atlas = ExtResource("1_njnj2")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mmkb0"]
+atlas = ExtResource("1_njnj2")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ekvxm"]
+atlas = ExtResource("1_njnj2")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kfcyl"]
+atlas = ExtResource("1_njnj2")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nllti"]
+atlas = ExtResource("1_njnj2")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hxjy2"]
+atlas = ExtResource("1_njnj2")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1f5si"]
+atlas = ExtResource("1_njnj2")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7gwy"]
+atlas = ExtResource("1_njnj2")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i0w6v"]
+atlas = ExtResource("1_njnj2")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xusbv"]
+atlas = ExtResource("1_njnj2")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3tf1c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k61kj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mmkb0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ekvxm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kfcyl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nllti")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hxjy2")
+}],
+"loop": false,
+"name": &"Explode",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1f5si")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x7gwy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i0w6v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xusbv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i0w6v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x7gwy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1f5si")
+}],
+"loop": true,
+"name": &"Normal",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fihap"]
+radius = 10.198
+
+[node name="ZebronBullet" type="Area2D"]
+collision_layer = 32
+collision_mask = 35
+script = ExtResource("1_om4b2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_3tf1c")
+animation = &"Explode"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_fihap")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

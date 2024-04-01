@@ -1,0 +1,89 @@
+[gd_scene load_steps=11 format=3 uid="uid://dtmwshe33hyj6"]
+
+[ext_resource type="Texture2D" uid="uid://dfhbog5xyt2hi" path="res://Art/ZebronCores.png" id="1_8dfog"]
+[ext_resource type="Script" path="res://Levels/Scripts/ZebronCore_pickup.gd" id="1_jfgh1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mkmec"]
+atlas = ExtResource("1_8dfog")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q1yoq"]
+atlas = ExtResource("1_8dfog")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4xbhv"]
+atlas = ExtResource("1_8dfog")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gduvd"]
+atlas = ExtResource("1_8dfog")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dg47h"]
+atlas = ExtResource("1_8dfog")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g08qg"]
+atlas = ExtResource("1_8dfog")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dkjre"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mkmec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q1yoq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4xbhv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gduvd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dg47h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g08qg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g08qg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gduvd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4xbhv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q1yoq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mkmec")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l3pic"]
+radius = 8.0
+
+[node name="ZebronCore_pickup" type="Area2D"]
+scale = Vector2(1.5, 1.5)
+collision_layer = 8
+collision_mask = 3
+script = ExtResource("1_jfgh1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_dkjre")
+autoplay = "default"
+frame_progress = 0.503397
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_l3pic")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -7,14 +7,14 @@ class_name AcidShotState
 var acid_bullet_scene = preload("res://Characters/The_Slime/acid_bullets.tscn")
 var shot_direction: int
 # Called when the node enters the scene tree for the first time.
-
+var shot_counter: int
 
 func on_enter():
 	##If the cooldown time period expired
 	face_player()
-	if $CooldownTimer.is_stopped():
-		spawn_acidshot()
-		$CooldownTimer.start()
+	shot_counter = 0
+	spawn_acidshot()
+	$CooldownTimer.start()
 	
 
 func spawn_acidshot():
@@ -23,6 +23,7 @@ func spawn_acidshot():
 	##Add as a child of root scene, in this case, we will add it as a child of Main Level
 	get_tree().root.add_child(projectile)
 	projectile.start(character.global_position, shot_direction)
+	shot_counter += 1
 
 
 func face_player():
@@ -37,5 +38,11 @@ func face_player():
 
 
 func _on_cool_down_timer_timeout():
-	Transitioned.emit(self, idle_state)
+	print(shot_counter)
+	if shot_counter <= 3:
+		face_player()
+		spawn_acidshot()
+		$CooldownTimer.start()
+	else:
+		Transitioned.emit(self, idle_state)
 	

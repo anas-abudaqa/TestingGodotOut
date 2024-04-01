@@ -3,7 +3,7 @@ extends CharacterBody2D
 @onready var state_machine: CharacterStateMachine = $CharacterStateMachine
 
 @export_category("Player settings")
-@export var player_speed: float = 150.0
+@export var player_speed: float = 250.0
 @export var jump_velocity: float = -200.0
 @export var double_jump_velocity_horizontal: float = 50
 @export var double_jump_velocity_vertical: float = -150
@@ -15,7 +15,7 @@ var direction: Vector2 = Vector2.ZERO
 var sword_position: float
 var max_health: int = 100
 var current_health: int
-
+var invulnerable: bool = false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -59,7 +59,16 @@ func update_orientation():
 
 
 func take_damage(value: int):
-	$HealthAndShieldNode.deal_damage(value)
+	if not invulnerable:
+		$HealthAndShieldNode.deal_damage(value)
+		$InvulnerabilityTimer.start()
+		invulnerable = true
+
+func heal_HP(heal_value: int):
+	$HealthAndShieldNode.heal(heal_value)
+
+func increase_max_hp(boost_value: int):
+	$HealthAndShieldNode.increase_max_health(boost_value)
 
 func unlock_ability(ability_name: String):
 	locked_abilities.erase(ability_name)
@@ -100,3 +109,7 @@ func _on_terrain_detector_entered_spikes():
 
 func _on_health_and_shield_node_has_died():
 	current_health = 0
+
+
+func _on_invulnerability_timer_timeout():
+	invulnerable = false

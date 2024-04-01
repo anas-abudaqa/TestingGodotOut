@@ -1,7 +1,7 @@
 extends Node
 
 var max_health: int = 0
-var current_health: int
+var current_health: int = 0
 var max_shield: int = 0
 var current_shield: int = 0
 var shield_enabled: bool = false 

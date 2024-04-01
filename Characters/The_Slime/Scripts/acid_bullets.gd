@@ -30,7 +30,7 @@ func start(starting_position, direction_x):
 		$Hitbox.position.x = hitbox_orientation
 
 func explode():
-	$AnimatedSprite2D.play("Exploded")
+	$AnimatedSprite2D.play("Explode")
 	#await $AnimatedSprite2D.animation_finished
 	queue_free()
 
@@ -39,7 +39,6 @@ func _on_body_entered(body):
 	if body.is_in_group("Player"):
 		body.take_damage(projectile_damage)
 		
-
 
 func _on_animated_sprite_2d_animation_finished():
 	pass

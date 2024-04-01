@@ -22,7 +22,6 @@ func _ready():
 			child.animated_sprite = animated_sprite
 			##Connect transition function
 			child.Transitioned.connect(on_state_transition)
-			##Connect animation tree
 			
 			## DEBUGGING
 			print(child)

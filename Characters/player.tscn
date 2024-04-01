@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://crl73xqhs01jq"]
+[gd_scene load_steps=56 format=3 uid="uid://crl73xqhs01jq"]
 
 [ext_resource type="Script" path="res://Characters/player.gd" id="1_s7pve"]
 [ext_resource type="Texture2D" uid="uid://dxfdiqd7iexfk" path="res://Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_vqqqw"]
@@ -547,6 +547,10 @@ graph_offset = Vector2(-528.725, -21)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0kxwk"]
 size = Vector2(16.25, 8.5)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vhq33"]
+radius = 9.0
+height = 48.0
+
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
 collision_mask = 45
@@ -664,6 +668,15 @@ shape = SubResource("RectangleShape2D_81r7m")
 
 [node name="HealthAndShieldNode" parent="." instance=ExtResource("14_1r5y1")]
 
+[node name="InvulnerabilityTimer" type="Timer" parent="."]
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 45
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CapsuleShape2D_vhq33")
+
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/Attack" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_player_changed" from="AnimationTree" to="." method="_on_animation_tree_animation_player_changed"]
 [connection signal="timeout" from="CharacterStateMachine/Attack/ComboInputTimer" to="CharacterStateMachine/Attack" method="_on_combo_input_timer_timeout"]
@@ -675,3 +688,4 @@ shape = SubResource("RectangleShape2D_81r7m")
 [connection signal="body_entered" from="Sword" to="Sword" method="_on_body_entered"]
 [connection signal="has_died" from="HealthAndShieldNode" to="." method="_on_health_and_shield_node_has_died"]
 [connection signal="health_changed" from="HealthAndShieldNode" to="." method="_on_health_and_shield_node_health_changed"]
+[connection signal="timeout" from="InvulnerabilityTimer" to="." method="_on_invulnerability_timer_timeout"]

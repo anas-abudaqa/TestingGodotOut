@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://crl73xqhs01jq"]
+[gd_scene load_steps=57 format=3 uid="uid://crl73xqhs01jq"]
 
 [ext_resource type="Script" path="res://Characters/player.gd" id="1_s7pve"]
 [ext_resource type="Texture2D" uid="uid://dxfdiqd7iexfk" path="res://Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_vqqqw"]
@@ -551,6 +551,9 @@ size = Vector2(16.25, 8.5)
 radius = 9.0
 height = 48.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wvqte"]
+size = Vector2(42, 50)
+
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
 collision_mask = 45
@@ -652,7 +655,7 @@ Character = NodePath("..")
 [node name="TerrainDetector" type="Area2D" parent="."]
 script = ExtResource("16_kh1a1")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainDetector"]
+[node name="TerrainDetector_CollisionShape2D" type="CollisionShape2D" parent="TerrainDetector"]
 position = Vector2(-1.125, 20.25)
 shape = SubResource("RectangleShape2D_0kxwk")
 
@@ -676,6 +679,13 @@ collision_mask = 45
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CapsuleShape2D_vhq33")
+
+[node name="ActionableFinder" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 128
+
+[node name="ActionableFinder_CollisionShape2D" type="CollisionShape2D" parent="ActionableFinder"]
+shape = SubResource("RectangleShape2D_wvqte")
 
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/Attack" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_player_changed" from="AnimationTree" to="." method="_on_animation_tree_animation_player_changed"]

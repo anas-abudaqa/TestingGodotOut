@@ -6,6 +6,7 @@ var maximum_health: float = 30
 var current_health: float = 0
 var direction: float
 var is_aggrod: bool = false
+var is_hurt: bool = false
 
 var sword_position: float
 var hitbox_position: float
@@ -19,7 +20,9 @@ func _ready():
 	$HealthAndShieldNode.set_health(maximum_health)
 
 func _physics_process(delta):
-	has_died()
+	## Check every single frame for death, otherwise will run into bugs where death isn't registered if it happened mid animation
+	$HealthAndShieldNode.is_dead()
+	
 	#Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -52,16 +55,16 @@ func update_orientation():
 
 func take_damage(damage_value):
 	$HealthAndShieldNode.deal_damage(damage_value)
-	
-	##check health in the healthnode since health has not refreshed for Mummy yet
-	if $HealthAndShieldNode.current_health <= 0:
-		SPEED = 0
-		$AnimatedSprite2D.play("Death")
-		await $AnimatedSprite2D.animation_finished
-		queue_free()
-	else:
-		$AnimatedSprite2D.play("Hurt")
-		await $AnimatedSprite2D.animation_finished
+	is_hurt = true
+	##Commented code does not work as death will only register when take_damage function is called. Caused issues where other animations can overwrite death sequence
+	#if $HealthAndShieldNode.current_health <= 0:
+		#
+		##SPEED = 0
+		##$AnimatedSprite2D.play("Death")
+		##await $AnimatedSprite2D.animation_finished
+		##queue_free()
+	#else:
+		#is_hurt = true
 
 func _on_health_and_shield_node_health_changed(cur_health, _max_health):
 	current_health = cur_health
@@ -78,5 +81,10 @@ func _on_aggro_area_body_exited(body):
 		print("Deaggroo")
 		is_aggrod = false
 
-func has_died():
-	pass
+
+func _on_health_and_shield_node_has_died():
+	print("DEAD MF")
+	SPEED = 0
+	$AnimatedSprite2D.play("Death")
+	await $AnimatedSprite2D.animation_finished
+	queue_free()

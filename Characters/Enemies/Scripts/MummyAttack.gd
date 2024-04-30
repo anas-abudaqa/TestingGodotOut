@@ -1,6 +1,11 @@
 extends State
 
 @export var idle_state: State
+@export var hurt_state: State
+
+func state_process(delta): 
+	if character.is_hurt:
+		Transitioned.emit(self, hurt_state)
 
 func on_enter():
 	animated_sprite.play("Attack")

@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlyj0f2uyr5k4"]
+
+[ext_resource type="Script" path="res://Dialogue/Scripts/Actionable.gd" id="1_pp5ix"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lk8gy"]
+size = Vector2(100.125, 97.0313)
+
+[node name="Actionable" type="Area2D" groups=["DialoguePrompt"]]
+collision_layer = 128
+collision_mask = 0
+script = ExtResource("1_pp5ix")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.0625, -5.51563)
+shape = SubResource("RectangleShape2D_lk8gy")

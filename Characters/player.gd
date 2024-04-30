@@ -10,7 +10,7 @@ extends CharacterBody2D
 
 var locked_abilities = ["OnWall", "Dash", "Fireball"]
 var unlocked_abilities = []
-
+#var cores_picked_up: int = 0
 var direction: Vector2 = Vector2.ZERO
 var sword_position: float
 var max_health: int = 100
@@ -28,9 +28,18 @@ func _ready():
 func _physics_process(delta):
 	$HealthAndShieldNode.is_dead()
 	# Add the gravity.
+	#print(cores_picked_up)
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	# Get the input direction and handle the movement/deceleration.
+	if Input.is_action_just_pressed("Interact"):
+		##Check if there is any collisions with our ActionableFinder collision box and fill var actionables with their references
+		var actionables = $ActionableFinder.get_overlapping_areas()
+		##if actionables has any entries in it
+		if actionables.size() > 0:
+			#run action method
+			actionables[0].action()
+	
 	direction = Input.get_vector("Left", "Right", "Up", "Down") #-1, +1, -1, +1
 	##if there is an x-axis input, and we are in a state that allows moving, then move
 	if direction.x and state_machine.can_move():
@@ -113,3 +122,22 @@ func _on_health_and_shield_node_has_died():
 
 func _on_invulnerability_timer_timeout():
 	invulnerable = false
+
+#func _on_zebron_core_pickup_picked_up():
+	#print("Picked up core number one!")
+	#cores_picked_up += 1
+#
+#
+#func _on_zebron_core_pickup_2_picked_up():
+	#print("Picked up core number two!")
+	#cores_picked_up += 1
+#
+#
+#func _on_zebron_core_pickup_3_picked_up():
+	#print("Picked up core number three!")
+	#cores_picked_up += 1
+#
+#
+#func _on_zebron_core_pickup_4_picked_up():
+	#print("Picked up core number four!")
+	#cores_picked_up += 1

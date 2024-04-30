@@ -1,0 +1,75 @@
+[gd_scene load_steps=11 format=3 uid="uid://5mw0ijymooyw"]
+
+[ext_resource type="Texture2D" uid="uid://cf7w6505b4t6x" path="res://Art/Ars_Notoria_Enemies/mage-1-85x94.png" id="1_j0v2j"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4k6eu"]
+atlas = ExtResource("1_j0v2j")
+region = Rect2(0, 0, 85, 94)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0e3dv"]
+atlas = ExtResource("1_j0v2j")
+region = Rect2(85, 0, 85, 94)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_327to"]
+atlas = ExtResource("1_j0v2j")
+region = Rect2(170, 0, 85, 94)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2xg6"]
+atlas = ExtResource("1_j0v2j")
+region = Rect2(255, 0, 85, 94)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bifi0"]
+atlas = ExtResource("1_j0v2j")
+region = Rect2(0, 94, 85, 94)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijol5"]
+atlas = ExtResource("1_j0v2j")
+region = Rect2(85, 94, 85, 94)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_egkgt"]
+atlas = ExtResource("1_j0v2j")
+region = Rect2(170, 94, 85, 94)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ortb6"]
+atlas = ExtResource("1_j0v2j")
+region = Rect2(255, 94, 85, 94)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o2sm7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4k6eu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0e3dv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_327to")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2xg6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bifi0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijol5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_egkgt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ortb6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="ZebronIdle" type="StaticBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_o2sm7")
+frame_progress = 0.447281
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]

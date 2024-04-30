@@ -1,6 +1,5 @@
-[gd_scene load_steps=54 format=3 uid="uid://0stnqh4hd55c"]
+[gd_scene load_steps=45 format=3 uid="uid://0stnqh4hd55c"]
 
-[ext_resource type="Texture2D" uid="uid://cf7w6505b4t6x" path="res://Art/Ars_Notoria_Enemies/mage-1-85x94.png" id="1_qyu8q"]
 [ext_resource type="Script" path="res://Characters/Zebron/Scripts/Zebron.gd" id="1_yg57j"]
 [ext_resource type="Texture2D" uid="uid://ddbq7rglt5rx6" path="res://Art/Zebron.png" id="2_531b3"]
 [ext_resource type="Texture2D" uid="uid://b28nhd1qx1id4" path="res://Art/Ars_Notoria_Enemies/mage-3-87x110.png" id="2_vqbmg"]
@@ -59,38 +58,6 @@ region = Rect2(87, 220, 87, 110)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ayhda"]
 atlas = ExtResource("2_531b3")
 region = Rect2(174, 220, 87, 110)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0tcce"]
-atlas = ExtResource("1_qyu8q")
-region = Rect2(0, 0, 85, 94)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wfo43"]
-atlas = ExtResource("1_qyu8q")
-region = Rect2(85, 0, 85, 94)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gw0c0"]
-atlas = ExtResource("1_qyu8q")
-region = Rect2(170, 0, 85, 94)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fpebu"]
-atlas = ExtResource("1_qyu8q")
-region = Rect2(255, 0, 85, 94)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_q2mm5"]
-atlas = ExtResource("1_qyu8q")
-region = Rect2(0, 94, 85, 94)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_52yxh"]
-atlas = ExtResource("1_qyu8q")
-region = Rect2(85, 94, 85, 94)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_g7fnn"]
-atlas = ExtResource("1_qyu8q")
-region = Rect2(170, 94, 85, 94)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nl28j"]
-atlas = ExtResource("1_qyu8q")
-region = Rect2(255, 94, 85, 94)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3n2uk"]
 atlas = ExtResource("4_mmiq5")
@@ -214,35 +181,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0tcce")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wfo43")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gw0c0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fpebu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_q2mm5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_52yxh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_g7fnn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nl28j")
-}],
-"loop": true,
-"name": &"Idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_ayhda")
 }, {
 "duration": 1.0,
@@ -355,7 +293,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Zebron" type="CharacterBody2D" groups=["Damageable"]]
+[node name="ZebronBoss" type="CharacterBody2D" groups=["Damageable"]]
 collision_layer = 16
 collision_mask = 17
 script = ExtResource("1_yg57j")
@@ -365,9 +303,7 @@ shape = SubResource("RectangleShape2D_sobi5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_p8fay")
-animation = &"Disappear"
-frame = 10
-frame_progress = 1.0
+animation = &"Uncloaked_Idle"
 
 [node name="Label" type="Label" parent="." node_paths=PackedStringArray("state_machine", "Character")]
 offset_left = -20.0

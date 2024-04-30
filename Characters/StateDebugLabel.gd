@@ -10,5 +10,5 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	text = "State: " + str(state_machine.current_state.name)
-	text += "
-	HP: " + str(Character.current_health)
+	#text += "
+	#HP: " + str(Character.current_health)

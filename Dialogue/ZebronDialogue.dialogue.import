@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://b4j6as5ev0rpi"
+path="res://.godot/imported/ZebronDialogue.dialogue-bd19916db639e929b88c522f5486f6a4.tres"
+
+[deps]
+
+source_file="res://Dialogue/ZebronDialogue.dialogue"
+dest_files=["res://.godot/imported/ZebronDialogue.dialogue-bd19916db639e929b88c522f5486f6a4.tres"]
+
+[params]
+
+defaults=true

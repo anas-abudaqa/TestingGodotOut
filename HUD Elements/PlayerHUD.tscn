@@ -1,0 +1,112 @@
+[gd_scene load_steps=14 format=3 uid="uid://dxjt7pr6g241j"]
+
+[ext_resource type="Texture2D" uid="uid://b4t8h2a2qva0m" path="res://Art/UI/bar_background.png" id="1_lj5gx"]
+[ext_resource type="Script" path="res://HUD Elements/Scripts/PlayerHUD.gd" id="1_ybmhu"]
+[ext_resource type="Texture2D" uid="uid://bjosmrhmq0slc" path="res://Art/UI/bar_foreground.png" id="2_1t5jf"]
+[ext_resource type="Texture2D" uid="uid://dfhbog5xyt2hi" path="res://Art/ZebronCores.png" id="3_hn8in"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pr6w0"]
+atlas = ExtResource("3_hn8in")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c0g3e"]
+atlas = ExtResource("3_hn8in")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nletp"]
+atlas = ExtResource("3_hn8in")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l2jgh"]
+atlas = ExtResource("3_hn8in")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aqf2t"]
+atlas = ExtResource("3_hn8in")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8keep"]
+atlas = ExtResource("3_hn8in")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6sd0w"]
+atlas = ExtResource("3_hn8in")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3rrhb"]
+atlas = ExtResource("3_hn8in")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rytrr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pr6w0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c0g3e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nletp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l2jgh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aqf2t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8keep")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6sd0w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3rrhb")
+}],
+"loop": true,
+"name": &"Twinkle",
+"speed": 5.0
+}]
+
+[node name="PlayerHUD" type="HBoxContainer"]
+offset_left = 4.0
+offset_right = 86.0
+offset_bottom = 60.0
+script = ExtResource("1_ybmhu")
+
+[node name="Healthbar" type="TextureProgressBar" parent="."]
+custom_minimum_size = Vector2(80, 16)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+value = 100.0
+nine_patch_stretch = true
+stretch_margin_left = 2
+stretch_margin_right = 2
+texture_under = ExtResource("1_lj5gx")
+texture_progress = ExtResource("2_1t5jf")
+
+[node name="Core1" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(11, 25)
+sprite_frames = SubResource("SpriteFrames_rytrr")
+animation = &"Twinkle"
+
+[node name="Core2" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(30, 25)
+sprite_frames = SubResource("SpriteFrames_rytrr")
+animation = &"Twinkle"
+
+[node name="Core3" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(49, 25)
+sprite_frames = SubResource("SpriteFrames_rytrr")
+animation = &"Twinkle"
+
+[node name="Core4" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(68, 25)
+sprite_frames = SubResource("SpriteFrames_rytrr")
+animation = &"Twinkle"

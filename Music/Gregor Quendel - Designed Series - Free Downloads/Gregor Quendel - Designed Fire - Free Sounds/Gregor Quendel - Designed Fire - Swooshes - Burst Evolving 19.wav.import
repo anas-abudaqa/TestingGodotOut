@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dtgf56klamsf8"
+path="res://.godot/imported/Gregor Quendel - Designed Fire - Swooshes - Burst Evolving 19.wav-773187e3c4db31c0d544d4eb258050e9.sample"
+
+[deps]
+
+source_file="res://Music/Gregor Quendel - Designed Series - Free Downloads/Gregor Quendel - Designed Fire - Free Sounds/Gregor Quendel - Designed Fire - Swooshes - Burst Evolving 19.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Fire - Swooshes - Burst Evolving 19.wav-773187e3c4db31c0d544d4eb258050e9.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

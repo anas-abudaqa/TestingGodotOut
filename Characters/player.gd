@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal player_died
+
 @onready var state_machine: CharacterStateMachine = $CharacterStateMachine
 
 @export_category("Player settings")
@@ -16,7 +18,9 @@ var sword_position: float
 var max_health: int = 100
 var current_health: int
 var invulnerable: bool = false
-
+var facing_right: bool = false
+var is_in_respawn_point: bool = false
+var respawn_point_ID: String 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -39,7 +43,12 @@ func _physics_process(delta):
 		if actionables.size() > 0:
 			#run action method
 			actionables[0].action()
-	
+		
+		##Check if we are in a respawn point. If so, run the set active respawn point in the Level script
+		if is_in_respawn_point:
+			get_parent().set_active_respawn_point(respawn_point_ID)
+		
+		
 	direction = Input.get_vector("Left", "Right", "Up", "Down") #-1, +1, -1, +1
 	##if there is an x-axis input, and we are in a state that allows moving, then move
 	if direction.x and state_machine.can_move():
@@ -59,10 +68,12 @@ func update_orientation():
 	##facing right
 	if direction.x > 0:
 		$Sprite2D.flip_h = false
+		facing_right = true
 		$Sword/SwordHitbox.position.x = sword_position
 	##facing left
 	if direction.x < 0:
 		$Sprite2D.flip_h = true
+		facing_right = false
 		#$Sword.position.x *= -1
 		$Sword/SwordHitbox.position.x = -sword_position
 
@@ -118,8 +129,18 @@ func _on_terrain_detector_entered_spikes():
 
 func _on_health_and_shield_node_has_died():
 	current_health = 0
+	$AnimationTree.get("parameters/playback").travel("Death")
+	#await $AnimationPlayer.animation_finished 
+	queue_free()
+	player_died.emit()
 
-
+#func _on_animation_player_animation_finished(anim_name):
+	#print("Animation done, which is it")
+	#if anim_name == "Death":
+		#queue_free()
+		#player_died.emit()
+		
+		
 func _on_invulnerability_timer_timeout():
 	invulnerable = false
 
@@ -141,3 +162,16 @@ func _on_invulnerability_timer_timeout():
 #func _on_zebron_core_pickup_4_picked_up():
 	#print("Picked up core number four!")
 	#cores_picked_up += 1
+
+##Set ID and proximity flag of player when collision with respawn point collision shape
+func _on_respawn_point_player_detected(ID):
+	print("Player entered vicinity of respawn point", ID)
+	respawn_point_ID = ID
+	is_in_respawn_point = true
+
+##Remove ID and proximity flag of player when collision with respawn point collision shape
+func _on_respawn_point_player_left(_ID):
+	print("Player left vicinity of respawn point: ")
+	respawn_point_ID = ""
+	is_in_respawn_point = false
+

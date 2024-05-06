@@ -9,6 +9,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func on_enter():
 	animated_sprite.play("Hurt")
+	#$AudioStreamPlayer.play()
 	await animated_sprite.animation_finished
 	Transitioned.emit(self, idle_state)
 

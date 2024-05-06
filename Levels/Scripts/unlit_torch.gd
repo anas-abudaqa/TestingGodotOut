@@ -15,3 +15,4 @@ func _process(delta):
 func light_up():
 	unlock_pathway.emit()
 	$Sprite2D.texture = lit_texture
+	$AudioStreamPlayer.play()

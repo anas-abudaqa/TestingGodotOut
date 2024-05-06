@@ -1,6 +1,6 @@
 extends Label
 
-@export var state_machine: MummyStateMachine
+@export var state_machine: WizardStateMachine
 @export var Character: CharacterBody2D
 # Called when the node enters the scene tree for the first time.
 func _ready():

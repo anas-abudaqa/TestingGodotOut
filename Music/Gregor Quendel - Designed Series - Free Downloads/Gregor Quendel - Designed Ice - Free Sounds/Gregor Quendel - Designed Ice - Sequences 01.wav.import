@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cilixbvgkcyl6"
+path="res://.godot/imported/Gregor Quendel - Designed Ice - Sequences 01.wav-8c443d5aeb9991c497730e104e3683da.sample"
+
+[deps]
+
+source_file="res://Music/Gregor Quendel - Designed Series - Free Downloads/Gregor Quendel - Designed Ice - Free Sounds/Gregor Quendel - Designed Ice - Sequences 01.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Ice - Sequences 01.wav-8c443d5aeb9991c497730e104e3683da.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -7,6 +7,7 @@ var current_health: float = 0
 var direction: float
 var is_aggrod: bool = false
 var is_hurt: bool = false
+var is_hurt_by_fire: bool = false
 
 var sword_position: float
 var hitbox_position: float
@@ -22,7 +23,9 @@ func _ready():
 func _physics_process(delta):
 	## Check every single frame for death, otherwise will run into bugs where death isn't registered if it happened mid animation
 	$HealthAndShieldNode.is_dead()
-	
+	if is_hurt_by_fire:
+		$AudioStreamPlayer.play()
+		is_hurt_by_fire = false
 	#Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta

@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://c72j371oc2uhu"]
+[gd_scene load_steps=41 format=3 uid="uid://c72j371oc2uhu"]
 
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/Wizard.gd" id="1_akiwq"]
 [ext_resource type="Texture2D" uid="uid://bjpkio55x44ht" path="res://Art/6 Deceased/Deceased_attack.png" id="1_olkng"]
@@ -12,6 +12,9 @@
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/WizardAttack.gd" id="10_6gras"]
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/WizardHurt.gd" id="11_nyjta"]
 [ext_resource type="PackedScene" uid="uid://b0glgx3pu4xre" path="res://Components/health&shield_component.tscn" id="12_nvktw"]
+[ext_resource type="Script" path="res://Characters/Enemies/Scripts/WizardLabel.gd" id="13_d052c"]
+[ext_resource type="PackedScene" uid="uid://maiybgvaa00l" path="res://HUD Elements/enemy_healthbar.tscn" id="14_01tmg"]
+[ext_resource type="AudioStream" uid="uid://dgc3llxav77eh" path="res://Music/Fireball_Impact.wav" id="15_ri8hj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vuyhv"]
 atlas = ExtResource("1_olkng")
@@ -139,7 +142,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_yfcd4")
 }],
-"loop": true,
+"loop": false,
 "name": &"Death",
 "speed": 6.0
 }, {
@@ -207,20 +210,22 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2csa6"]
 size = Vector2(29, 53)
 
-[node name="Wizard" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jcncy"]
+size = Vector2(587.358, 36.75)
+
+[node name="Wizard" type="CharacterBody2D" groups=["Damageable"]]
 collision_layer = 4
 collision_mask = 35
 script = ExtResource("1_akiwq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -36)
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_ufmsr")
-animation = &"Hurt"
-frame = 4
-frame_progress = 1.0
+animation = &"Death"
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
-position = Vector2(17.5, 8.5)
+position = Vector2(18, -27)
 shape = SubResource("RectangleShape2D_2csa6")
 
 [node name="CharacterStateMachine" type="Node" parent="." node_paths=PackedStringArray("animated_sprite", "character", "initial_state") groups=["Damageable"]]
@@ -233,6 +238,7 @@ initial_state = NodePath("Idle")
 script = ExtResource("8_5uh0x")
 walk_state = NodePath("../Walk")
 hurt_state = NodePath("../Hurt")
+can_move = false
 
 [node name="Walk" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("attack_state", "hurt_state", "idle_state")]
 script = ExtResource("9_imgfe")
@@ -244,19 +250,53 @@ idle_state = NodePath("../Idle")
 script = ExtResource("10_6gras")
 idle_state = NodePath("../Idle")
 hurt_state = NodePath("../Hurt")
+can_move = false
 
 [node name="CooldownTimer" type="Timer" parent="CharacterStateMachine/Attack"]
+wait_time = 2.0
 
 [node name="WindupTimer" type="Timer" parent="CharacterStateMachine/Attack"]
-wait_time = 0.6
+wait_time = 0.2
 
 [node name="Hurt" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("idle_state")]
 script = ExtResource("11_nyjta")
 idle_state = NodePath("../Idle")
+can_move = false
 
 [node name="HealthAndShieldNode" parent="." instance=ExtResource("12_nvktw")]
 
+[node name="AggroArea" type="Area2D" parent="."]
+position = Vector2(0, 5)
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AggroArea"]
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_jcncy")
+
+[node name="Label" type="Label" parent="." node_paths=PackedStringArray("state_machine", "Character")]
+offset_left = -3.0
+offset_top = -102.0
+offset_right = 37.0
+offset_bottom = -79.0
+script = ExtResource("13_d052c")
+state_machine = NodePath("../CharacterStateMachine")
+Character = NodePath("..")
+
+[node name="Enemy Healthbar" parent="." instance=ExtResource("14_01tmg")]
+offset_left = -16.0
+offset_top = -68.0
+offset_right = 54.0
+offset_bottom = -61.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_ri8hj")
+volume_db = 3.0
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="CharacterStateMachine/Attack" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="CharacterStateMachine/Attack/CooldownTimer" to="CharacterStateMachine/Attack" method="_on_cooldown_timer_timeout"]
 [connection signal="timeout" from="CharacterStateMachine/Attack/WindupTimer" to="CharacterStateMachine/Attack" method="_on_windup_timer_timeout"]
 [connection signal="has_died" from="HealthAndShieldNode" to="." method="_on_health_and_shield_node_has_died"]
 [connection signal="health_changed" from="HealthAndShieldNode" to="." method="_on_health_and_shield_node_health_changed"]
+[connection signal="body_entered" from="AggroArea" to="." method="_on_aggro_area_body_entered"]
+[connection signal="body_exited" from="AggroArea" to="." method="_on_aggro_area_body_exited"]

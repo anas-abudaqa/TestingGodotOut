@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://crl73xqhs01jq"]
+[gd_scene load_steps=66 format=3 uid="uid://crl73xqhs01jq"]
 
 [ext_resource type="Script" path="res://Characters/player.gd" id="1_s7pve"]
 [ext_resource type="Texture2D" uid="uid://dxfdiqd7iexfk" path="res://Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_vqqqw"]
@@ -8,16 +8,20 @@
 [ext_resource type="Script" path="res://Characters/CharacterStateMachine.gd" id="6_nlrwx"]
 [ext_resource type="Texture2D" uid="uid://bcwwoh0rxjatf" path="res://Legacy-Fantasy - High Forest 2.3/Character/Attack-01/Attack-01-Sheet.png" id="6_y5mtl"]
 [ext_resource type="Script" path="res://Characters/GroundState.gd" id="7_5t7iy"]
+[ext_resource type="Texture2D" uid="uid://jt2s7fryvm4r" path="res://Legacy-Fantasy - High Forest 2.3/Character/Dead/Dead-Sheet.png" id="7_iet8x"]
 [ext_resource type="Script" path="res://Characters/InAirState.gd" id="8_0ko3l"]
 [ext_resource type="Script" path="res://Characters/LandingState.gd" id="9_o346u"]
 [ext_resource type="Script" path="res://Characters/StateDebugLabel.gd" id="10_odruf"]
 [ext_resource type="Script" path="res://Characters/Attack.gd" id="11_ypqh0"]
 [ext_resource type="Script" path="res://Characters/OnWall.gd" id="12_7vwmp"]
+[ext_resource type="AudioStream" uid="uid://bvq6gcpavc4o" path="res://Music/mixkit-fast-sword-whoosh-2792.wav" id="12_1767t"]
 [ext_resource type="Script" path="res://Characters/Dash.gd" id="13_drhut"]
 [ext_resource type="Script" path="res://Characters/Sword.gd" id="13_j1klm"]
 [ext_resource type="PackedScene" uid="uid://b0glgx3pu4xre" path="res://Components/health&shield_component.tscn" id="14_1r5y1"]
 [ext_resource type="Script" path="res://Characters/Player/FireballState.gd" id="14_g1he7"]
+[ext_resource type="AudioStream" uid="uid://3mmthwk61j5r" path="res://Music/Fireball.wav" id="16_js1un"]
 [ext_resource type="Script" path="res://Components/Scripts/TerrainDetector.gd" id="16_kh1a1"]
+[ext_resource type="AudioStream" uid="uid://ulquaq2rnk6j" path="res://Music/mixkit-quick-saber-cut-2158.mp3" id="20_sgb71"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8saj5"]
 size = Vector2(17, 41.75)
@@ -86,6 +90,18 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [SubResource("RectangleShape2D_81r7m")]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:offset")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-32, -40)]
 }
 
 [sub_resource type="Animation" id="Animation_6faih"]
@@ -446,8 +462,60 @@ tracks/2/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
 
+[sub_resource type="Animation" id="Animation_pdwf4"]
+resource_name = "Death"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("7_iet8x")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 7, 7]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:offset")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-32, -23), Vector2(-32, -40)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wc2rx"]
 _data = {
+"Death": SubResource("Animation_pdwf4"),
 "RESET": SubResource("Animation_vogmq"),
 "attack1": SubResource("Animation_6faih"),
 "attack2": SubResource("Animation_v5xbp"),
@@ -458,6 +526,9 @@ _data = {
 "landing": SubResource("Animation_b3bt0"),
 "running": SubResource("Animation_x5v5o")
 }
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_l73e3"]
+animation = &"Death"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_51pen"]
 animation = &"idle"
@@ -525,7 +596,15 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_kj4yy"]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jjovs"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dufor"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_po1sm"]
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_lwpq8"]
+states/Death/node = SubResource("AnimationNodeAnimation_l73e3")
+states/Death/position = Vector2(692.275, 155)
 states/Move/node = SubResource("AnimationNodeBlendSpace1D_ljt1e")
 states/Move/position = Vector2(402, 100)
 states/Start/position = Vector2(202, 100)
@@ -541,8 +620,8 @@ states/jump/node = SubResource("AnimationNodeAnimation_mdkyn")
 states/jump/position = Vector2(402, 3)
 states/landing/node = SubResource("AnimationNodeAnimation_k08bb")
 states/landing/position = Vector2(594.275, 100)
-transitions = ["Start", "Move", SubResource("AnimationNodeStateMachineTransition_0kfp6"), "jump", "double_jump", SubResource("AnimationNodeStateMachineTransition_gljdm"), "Move", "jump", SubResource("AnimationNodeStateMachineTransition_twn2r"), "landing", "Move", SubResource("AnimationNodeStateMachineTransition_f0yyu"), "jump", "landing", SubResource("AnimationNodeStateMachineTransition_70xr3"), "double_jump", "landing", SubResource("AnimationNodeStateMachineTransition_sxh4j"), "Move", "attack1", SubResource("AnimationNodeStateMachineTransition_3wcjo"), "attack1", "Move", SubResource("AnimationNodeStateMachineTransition_u2n58"), "attack1", "attack2", SubResource("AnimationNodeStateMachineTransition_cs2nn"), "attack2", "Move", SubResource("AnimationNodeStateMachineTransition_6vk4o"), "Move", "dashing", SubResource("AnimationNodeStateMachineTransition_4brj5"), "dashing", "Move", SubResource("AnimationNodeStateMachineTransition_kj4yy")]
-graph_offset = Vector2(-528.725, -21)
+transitions = ["Start", "Move", SubResource("AnimationNodeStateMachineTransition_0kfp6"), "jump", "double_jump", SubResource("AnimationNodeStateMachineTransition_gljdm"), "Move", "jump", SubResource("AnimationNodeStateMachineTransition_twn2r"), "landing", "Move", SubResource("AnimationNodeStateMachineTransition_f0yyu"), "jump", "landing", SubResource("AnimationNodeStateMachineTransition_70xr3"), "double_jump", "landing", SubResource("AnimationNodeStateMachineTransition_sxh4j"), "Move", "attack1", SubResource("AnimationNodeStateMachineTransition_3wcjo"), "attack1", "Move", SubResource("AnimationNodeStateMachineTransition_u2n58"), "attack1", "attack2", SubResource("AnimationNodeStateMachineTransition_cs2nn"), "attack2", "Move", SubResource("AnimationNodeStateMachineTransition_6vk4o"), "Move", "dashing", SubResource("AnimationNodeStateMachineTransition_4brj5"), "dashing", "Move", SubResource("AnimationNodeStateMachineTransition_kj4yy"), "Move", "Death", SubResource("AnimationNodeStateMachineTransition_jjovs"), "attack1", "Death", SubResource("AnimationNodeStateMachineTransition_dufor"), "attack2", "Death", SubResource("AnimationNodeStateMachineTransition_po1sm")]
+graph_offset = Vector2(-425.725, -44)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0kxwk"]
 size = Vector2(16.25, 8.5)
@@ -616,6 +695,10 @@ can_move = false
 [node name="ComboInputTimer" type="Timer" parent="CharacterStateMachine/Attack"]
 one_shot = true
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CharacterStateMachine/Attack"]
+stream = ExtResource("12_1767t")
+volume_db = 5.0
+
 [node name="OnWall" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("inair_state", "landing_state")]
 script = ExtResource("12_7vwmp")
 inair_state = NodePath("../InAir")
@@ -639,8 +722,12 @@ wait_time = 0.5
 one_shot = true
 
 [node name="CooldownTimer" type="Timer" parent="CharacterStateMachine/Fireball"]
-wait_time = 0.7
+wait_time = 1.5
 one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CharacterStateMachine/Fireball"]
+stream = ExtResource("16_js1un")
+volume_db = 5.0
 
 [node name="StateDebugLabel" type="Label" parent="." node_paths=PackedStringArray("state_machine", "Character")]
 offset_left = -56.0
@@ -669,6 +756,10 @@ script = ExtResource("13_j1klm")
 position = Vector2(41, -1.5)
 shape = SubResource("RectangleShape2D_81r7m")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Sword"]
+stream = ExtResource("20_sgb71")
+volume_db = 5.0
+
 [node name="HealthAndShieldNode" parent="." instance=ExtResource("14_1r5y1")]
 
 [node name="InvulnerabilityTimer" type="Timer" parent="."]
@@ -687,8 +778,9 @@ collision_mask = 128
 [node name="ActionableFinder_CollisionShape2D" type="CollisionShape2D" parent="ActionableFinder"]
 shape = SubResource("RectangleShape2D_wvqte")
 
-[connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/Attack" method="_on_animation_tree_animation_finished"]
-[connection signal="animation_player_changed" from="AnimationTree" to="." method="_on_animation_tree_animation_player_changed"]
+[node name="Death_AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="CharacterStateMachine/Attack/ComboInputTimer" to="CharacterStateMachine/Attack" method="_on_combo_input_timer_timeout"]
 [connection signal="timeout" from="CharacterStateMachine/Dash/DashTimer" to="CharacterStateMachine/Dash" method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="CharacterStateMachine/Fireball/CooldownTimer" to="CharacterStateMachine/Fireball" method="_on_cooldown_timer_timeout"]

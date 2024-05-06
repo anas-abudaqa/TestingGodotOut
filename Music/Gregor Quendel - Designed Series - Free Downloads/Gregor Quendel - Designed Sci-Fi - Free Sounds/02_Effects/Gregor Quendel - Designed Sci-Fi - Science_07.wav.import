@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c2tyxr1qp3a4w"
+path="res://.godot/imported/Gregor Quendel - Designed Sci-Fi - Science_07.wav-d59c07f7903084449a69cee7017407ae.sample"
+
+[deps]
+
+source_file="res://Music/Gregor Quendel - Designed Series - Free Downloads/Gregor Quendel - Designed Sci-Fi - Free Sounds/02_Effects/Gregor Quendel - Designed Sci-Fi - Science_07.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Sci-Fi - Science_07.wav-d59c07f7903084449a69cee7017407ae.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://gh7xrt14nf4x"
+path="res://.godot/imported/Gregor Quendel - Designed Sci-Fi - AlienChime.wav-ba539adbef88b0035789d2f8955a023f.sample"
+
+[deps]
+
+source_file="res://Music/Gregor Quendel - Designed Series - Free Downloads/Gregor Quendel - Designed Sci-Fi - Free Sounds/01_Textures/Gregor Quendel - Designed Sci-Fi - AlienChime.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Sci-Fi - AlienChime.wav-ba539adbef88b0035789d2f8955a023f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -7,7 +7,8 @@ var current_health: float = 0
 var direction: float
 var is_aggrod: bool = false
 var is_hurt: bool = false
-
+var facing_direction: String
+var is_hurt_by_fire: bool = false
 var hitbox_position: float
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -20,6 +21,10 @@ func _ready():
 func _physics_process(delta):
 	## Check every single frame for death, otherwise will run into bugs where death isn't registered if it happened mid animation
 	$HealthAndShieldNode.is_dead()
+	
+	if is_hurt_by_fire:
+		$AudioStreamPlayer.play()
+		is_hurt_by_fire = false
 	
 	#Add the gravity.
 	if not is_on_floor():
@@ -38,13 +43,13 @@ func update_orientation():
 	##facing right
 	if direction == +1:
 		$AnimatedSprite2D.flip_h = true
-		
+		facing_direction = "left"
 		##Sprite is not centered correctly in original art, so we need to move the collision shape too
 		$Hitbox.position.x = -hitbox_position
 	##facing left
 	if direction == -1:
 		$AnimatedSprite2D.flip_h = false
-		
+		facing_direction = "right"
 		##Sprite is not centered correctly in original art, so we need to move the collision shape too
 		$Hitbox.position.x = hitbox_position
 		#$Sword.position.x *= -1
@@ -52,7 +57,7 @@ func update_orientation():
 func take_damage(damage_value):
 	$HealthAndShieldNode.deal_damage(damage_value)
 	is_hurt = true
-	##Commented code does not work as death will only register when take_damage function is called. Caused issues where other animations can overwrite death sequence
+	#Commented code does not work as death will only register when take_damage function is called. Caused issues where other animations can overwrite death sequence
 	#if $HealthAndShieldNode.current_health <= 0:
 		#
 		##SPEED = 0
@@ -67,6 +72,7 @@ func _on_health_and_shield_node_health_changed(cur_health, _max_health):
 
 
 func _on_aggro_area_body_entered(body):
+	print("Hello")
 	if body.is_in_group("Player"):
 		print("Aggrooo")
 		is_aggrod = true

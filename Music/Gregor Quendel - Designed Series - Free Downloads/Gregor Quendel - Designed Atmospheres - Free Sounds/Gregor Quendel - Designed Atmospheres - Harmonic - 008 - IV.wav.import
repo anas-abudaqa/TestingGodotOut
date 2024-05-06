@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bio3w6g2uiqk8"
+path="res://.godot/imported/Gregor Quendel - Designed Atmospheres - Harmonic - 008 - IV.wav-6908ce1e9a159788ac4dda600346449b.sample"
+
+[deps]
+
+source_file="res://Music/Gregor Quendel - Designed Series - Free Downloads/Gregor Quendel - Designed Atmospheres - Free Sounds/Gregor Quendel - Designed Atmospheres - Harmonic - 008 - IV.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Atmospheres - Harmonic - 008 - IV.wav-6908ce1e9a159788ac4dda600346449b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

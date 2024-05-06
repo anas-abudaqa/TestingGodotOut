@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bpdu60t2yfnwe"]
+
+[ext_resource type="Script" path="res://Characters/Enemies/Scripts/WizardProjectile.gd" id="1_kcac3"]
+[ext_resource type="Texture2D" uid="uid://b0aql87guekxo" path="res://Art/6 Deceased/Ball.png" id="2_mlo3d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hlkgi"]
+size = Vector2(3.5625, 2)
+
+[node name="WizardProjectile" type="Area2D"]
+scale = Vector2(3, 3)
+collision_layer = 32
+collision_mask = 2
+script = ExtResource("1_kcac3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_mlo3d")
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_hlkgi")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

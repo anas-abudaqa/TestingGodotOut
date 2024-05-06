@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://4qivtkdgjw3m"]
+[gd_scene load_steps=46 format=3 uid="uid://4qivtkdgjw3m"]
 
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/Mummy.gd" id="1_pm5yw"]
 [ext_resource type="Texture2D" uid="uid://ddvnnvbvhjg50" path="res://Art/5 Mummy/Mummy_attack.png" id="2_mh021"]
@@ -14,8 +14,10 @@
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/MummyAttack.gd" id="11_iuc32"]
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/MummyHurt.gd" id="12_fn64w"]
 [ext_resource type="PackedScene" uid="uid://b0glgx3pu4xre" path="res://Components/health&shield_component.tscn" id="13_pc0wp"]
+[ext_resource type="AudioStream" uid="uid://ulquaq2rnk6j" path="res://Music/mixkit-quick-saber-cut-2158.mp3" id="14_1ql2r"]
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/MummyLabel.gd" id="14_7c4l5"]
 [ext_resource type="PackedScene" uid="uid://maiybgvaa00l" path="res://HUD Elements/enemy_healthbar.tscn" id="16_aw4b6"]
+[ext_resource type="AudioStream" uid="uid://dgc3llxav77eh" path="res://Music/Fireball_Impact.wav" id="18_umyq0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qbdn4"]
 atlas = ExtResource("2_mh021")
@@ -293,6 +295,10 @@ script = ExtResource("12_fn64w")
 idle_state = NodePath("../Idle")
 can_move = false
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CharacterStateMachine/Hurt"]
+stream = ExtResource("14_1ql2r")
+volume_db = 5.0
+
 [node name="HealthAndShieldNode" parent="." instance=ExtResource("13_pc0wp")]
 
 [node name="Label" type="Label" parent="." node_paths=PackedStringArray("state_machine", "Character")]
@@ -309,7 +315,7 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AggroArea"]
-position = Vector2(-1, -17)
+position = Vector2(0, -17)
 shape = SubResource("RectangleShape2D_dfghk")
 
 [node name="Enemy Healthbar" parent="." instance=ExtResource("16_aw4b6")]
@@ -317,6 +323,10 @@ offset_left = -18.0
 offset_top = -67.0
 offset_right = 52.0
 offset_bottom = -60.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_umyq0")
+volume_db = 5.0
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="CharacterStateMachine/Attack" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="Sword" to="Sword" method="_on_body_entered"]

@@ -13,12 +13,14 @@ func _ready():
 func on_enter():
 	##If the cooldown time period expired
 	if $CooldownTimer.is_stopped():
+		#$AudioStreamPlayer.play()
 		## create instance of fireball scene and save it to variable projectile
 		var projectile = fireball_scene.instantiate()
 		## Add it to the root scene of the current scene tree
 		get_tree().root.add_child(projectile)
 		##call start function and feed it spawn position. Adjusted for player height
-		projectile.start(character.global_position, character.direction.x)
+		projectile.start(character.global_position, character.facing_right)
+		$AudioStreamPlayer.play()
 		##Start timer
 		$CooldownTimer.start()
 	#Transition back always, regardless of cooldown timer status

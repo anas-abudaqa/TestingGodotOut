@@ -18,18 +18,18 @@ func state_process(delta):
 
 func chase_player():
 	animated_sprite.play("Walk")
-	if character.player.global_position.x - character.global_position.x > 20: 
+	if character.player.global_position.x - character.global_position.x > 250: 
 		character.direction = +1
 	##player to the left of snail
-	elif character.player.global_position.x - character.global_position.x < -20:  
+	elif character.player.global_position.x - character.global_position.x < -250:  
 		character.direction = -1
 	else:
 		Transitioned.emit(self, attack_state)
 
-func patrol():
-	character.direction = +1
-	if character.player.global_position.x - initial_position > 2: 
-		character.direction = +1
-	##player to the left of snail
-	elif character.player.global_position.x - initial_position < -2:  
-		character.direction = -1
+#func patrol():
+	#character.direction = +1
+	#if character.player.global_position.x - initial_position > 2: 
+		#character.direction = +1
+	###player to the left of snail
+	#elif character.player.global_position.x - initial_position < -2:  
+		#character.direction = -1

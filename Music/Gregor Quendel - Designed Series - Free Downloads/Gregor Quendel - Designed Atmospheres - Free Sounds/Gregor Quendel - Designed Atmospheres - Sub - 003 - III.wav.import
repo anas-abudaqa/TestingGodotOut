@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ddfdy1a3xdgnv"
+path="res://.godot/imported/Gregor Quendel - Designed Atmospheres - Sub - 003 - III.wav-6d929c958a99cb9c646132a8f70d9eec.sample"
+
+[deps]
+
+source_file="res://Music/Gregor Quendel - Designed Series - Free Downloads/Gregor Quendel - Designed Atmospheres - Free Sounds/Gregor Quendel - Designed Atmospheres - Sub - 003 - III.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Atmospheres - Sub - 003 - III.wav-6d929c958a99cb9c646132a8f70d9eec.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

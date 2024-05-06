@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://djg408n1q6rl7"
+path="res://.godot/imported/Gregor Quendel - Designed Rocks - Elements 09.wav-936ad9e8db81e772567d257c9cd5291b.sample"
+
+[deps]
+
+source_file="res://Music/Gregor Quendel - Designed Series - Free Downloads/Gregor Quendel - Designed Rocks - Free Sounds/Gregor Quendel - Designed Rocks - Elements 09.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Rocks - Elements 09.wav-936ad9e8db81e772567d257c9cd5291b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

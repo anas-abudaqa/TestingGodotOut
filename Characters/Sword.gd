@@ -15,5 +15,6 @@ func _process(delta):
 func _on_body_entered(body):
 	print("Player what did we touch")
 	if body.is_in_group("Damageable"):
+		$AudioStreamPlayer.play()
 		print("Player we just molested an enemy")
 		body.take_damage(damage)

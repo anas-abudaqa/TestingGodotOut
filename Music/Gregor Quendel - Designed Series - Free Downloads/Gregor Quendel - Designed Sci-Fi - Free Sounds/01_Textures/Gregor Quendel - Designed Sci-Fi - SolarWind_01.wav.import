@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b7x30maj10wph"
+path="res://.godot/imported/Gregor Quendel - Designed Sci-Fi - SolarWind_01.wav-bd7076c73c16a984686f51b7849c33fa.sample"
+
+[deps]
+
+source_file="res://Music/Gregor Quendel - Designed Series - Free Downloads/Gregor Quendel - Designed Sci-Fi - Free Sounds/01_Textures/Gregor Quendel - Designed Sci-Fi - SolarWind_01.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Sci-Fi - SolarWind_01.wav-bd7076c73c16a984686f51b7849c33fa.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://c72j371oc2uhu"]
+[gd_scene load_steps=42 format=3 uid="uid://c72j371oc2uhu"]
 
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/Wizard.gd" id="1_akiwq"]
 [ext_resource type="Texture2D" uid="uid://bjpkio55x44ht" path="res://Art/6 Deceased/Deceased_attack.png" id="1_olkng"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/WizardLabel.gd" id="13_d052c"]
 [ext_resource type="PackedScene" uid="uid://maiybgvaa00l" path="res://HUD Elements/enemy_healthbar.tscn" id="14_01tmg"]
 [ext_resource type="AudioStream" uid="uid://dgc3llxav77eh" path="res://Music/Fireball_Impact.wav" id="15_ri8hj"]
+[ext_resource type="Script" path="res://Characters/Enemies/Scripts/Raycast_Player_detector.gd" id="16_520b1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vuyhv"]
 atlas = ExtResource("1_olkng")
@@ -234,9 +235,9 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 character = NodePath("..")
 initial_state = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("walk_state", "hurt_state")]
+[node name="Idle" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("attack_state", "hurt_state")]
 script = ExtResource("8_5uh0x")
-walk_state = NodePath("../Walk")
+attack_state = NodePath("../Attack")
 hurt_state = NodePath("../Hurt")
 can_move = false
 
@@ -266,6 +267,7 @@ can_move = false
 [node name="HealthAndShieldNode" parent="." instance=ExtResource("12_nvktw")]
 
 [node name="AggroArea" type="Area2D" parent="."]
+visible = false
 position = Vector2(0, 5)
 collision_layer = 4
 collision_mask = 2
@@ -293,6 +295,18 @@ offset_bottom = -61.0
 stream = ExtResource("15_ri8hj")
 volume_db = 3.0
 
+[node name="RayCast2D_Left" type="RayCast2D" parent="."]
+position = Vector2(1, -37)
+target_position = Vector2(-298, -1)
+collision_mask = 2
+script = ExtResource("16_520b1")
+
+[node name="RayCast2D_Right" type="RayCast2D" parent="."]
+position = Vector2(1, -37)
+target_position = Vector2(295, 0)
+collision_mask = 2
+script = ExtResource("16_520b1")
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="CharacterStateMachine/Attack" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="CharacterStateMachine/Attack/CooldownTimer" to="CharacterStateMachine/Attack" method="_on_cooldown_timer_timeout"]
 [connection signal="timeout" from="CharacterStateMachine/Attack/WindupTimer" to="CharacterStateMachine/Attack" method="_on_windup_timer_timeout"]
@@ -300,3 +314,7 @@ volume_db = 3.0
 [connection signal="health_changed" from="HealthAndShieldNode" to="." method="_on_health_and_shield_node_health_changed"]
 [connection signal="body_entered" from="AggroArea" to="." method="_on_aggro_area_body_entered"]
 [connection signal="body_exited" from="AggroArea" to="." method="_on_aggro_area_body_exited"]
+[connection signal="player_detected" from="RayCast2D_Left" to="." method="_on_ray_cast_2d_left_player_detected"]
+[connection signal="player_not_detected" from="RayCast2D_Left" to="." method="_on_ray_cast_2d_left_player_not_detected"]
+[connection signal="player_detected" from="RayCast2D_Right" to="." method="_on_ray_cast_2d_right_player_detected"]
+[connection signal="player_not_detected" from="RayCast2D_Right" to="." method="_on_ray_cast_2d_right_player_not_detected"]

@@ -1,16 +1,15 @@
 extends CharacterBody2D
 
 class_name ZebronAI
-@export var playerbody: CharacterBody2D
-
 signal ZebronDead
 
+@export var playerbody: CharacterBody2D
+@export var spawn_point: Marker2D
 
 const SPEED = 200.0
 const VERTICAL_SPEED = 150.0
 const CONTACT_DAMAGE = 10
-var aggrod: bool = false
-var maximum_health: float = 150
+var maximum_health: float = 200
 var current_health: float = 0
 var teleport_shot_counter: int = 0
 
@@ -18,6 +17,7 @@ var direction: Vector2i = Vector2.ZERO
 
 func _ready():
 	$HealthAndShieldNode.set_health(maximum_health)
+	global_position = spawn_point.global_position
 
 func _physics_process(delta):
 
@@ -63,11 +63,6 @@ func check_for_ceiling():
 	if is_on_ceiling():
 		direction.y *= -1
 
-
-##When player walks into range, start aggression
-func _on_player_detector_player_detected():
-	aggrod = true
-	print("Now we are aggrod")
 
 func take_damage(damage_value):
 	$HealthAndShieldNode.deal_damage(damage_value)

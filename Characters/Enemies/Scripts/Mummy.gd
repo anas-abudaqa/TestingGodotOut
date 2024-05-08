@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var player: CharacterBody2D
+#@export var player: CharacterBody2D
 var SPEED = 50.0
 var maximum_health: float = 30
 var current_health: float = 0
@@ -8,7 +8,8 @@ var direction: float
 var is_aggrod: bool = false
 var is_hurt: bool = false
 var is_hurt_by_fire: bool = false
-
+var player_on_left: bool = false
+var player_on_right: bool = true
 var sword_position: float
 var hitbox_position: float
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -19,6 +20,10 @@ func _ready():
 	sword_position = $Sword/SwordHitbox.position.x
 	hitbox_position = $Hitbox.position.x
 	$HealthAndShieldNode.set_health(maximum_health)
+	#var player = get_tree().root.find_child("Player")
+	#var player = get_node("/root/Player")
+	#print("Mummy sees this player ", player)
+
 
 func _physics_process(delta):
 	## Check every single frame for death, otherwise will run into bugs where death isn't registered if it happened mid animation
@@ -29,7 +34,10 @@ func _physics_process(delta):
 	#Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
-
+	if not player_on_left and not player_on_right:
+		is_aggrod = false
+		direction = 0
+		
 	if direction and $CharacterStateMachine.can_move():
 		velocity.x = direction * SPEED
 	else:
@@ -73,17 +81,6 @@ func _on_health_and_shield_node_health_changed(cur_health, _max_health):
 	current_health = cur_health
 
 
-func _on_aggro_area_body_entered(body):
-	if body.is_in_group("Player"):
-		print("Aggrooo")
-		is_aggrod = true
-
-
-func _on_aggro_area_body_exited(body):
-	if body.is_in_group("Player"):
-		print("Deaggroo")
-		is_aggrod = false
-
 
 func _on_health_and_shield_node_has_died():
 	print("DEAD MF")
@@ -91,3 +88,27 @@ func _on_health_and_shield_node_has_died():
 	$AnimatedSprite2D.play("Death")
 	await $AnimatedSprite2D.animation_finished
 	queue_free()
+
+
+func _on_ray_cast_2d_left_player_detected():
+	is_aggrod = true
+	direction = -1
+	player_on_left = true
+
+
+func _on_ray_cast_2d_left_player_not_detected():
+	player_on_left = false
+	#is_aggrod = false
+	#direction = 0
+
+
+func _on_ray_cast_2d_right_player_detected():
+	is_aggrod = true
+	direction = +1
+	player_on_right = true
+
+
+func _on_ray_cast_2d_right_player_not_detected():
+	player_on_right = false
+	#is_aggrod = false
+	#direction = 0

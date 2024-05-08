@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://ce2ci3kowq5cs"]
+
+[ext_resource type="Script" path="res://HUD Elements/Scripts/enemy_healthbar.gd" id="1_2sp3b"]
+[ext_resource type="Texture2D" uid="uid://o560bdfb76ey" path="res://Art/UI/enemy_health_bar_background_000.png" id="2_jwmd5"]
+[ext_resource type="Texture2D" uid="uid://bff6ri10t8wkf" path="res://Art/UI/enemy_health_bar_foreground_002.png" id="3_vuevg"]
+[ext_resource type="Texture2D" uid="uid://bohk46bcw2pq" path="res://Art/UI/enemy_health_bar_000.png" id="4_kghpj"]
+
+[node name="Boss Healthbar" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_2sp3b")
+
+[node name="Healthbar" type="TextureProgressBar" parent="."]
+layout_mode = 2
+value = 80.0
+texture_under = ExtResource("2_jwmd5")
+texture_over = ExtResource("3_vuevg")
+texture_progress = ExtResource("4_kghpj")

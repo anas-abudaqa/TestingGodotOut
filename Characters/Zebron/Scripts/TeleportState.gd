@@ -24,7 +24,6 @@ func _on_invisibility_timer_timeout():
 	find_player()
 	$ReemergenceTimer.start()
 
-
 func _on_reemergence_timer_timeout():
 	teleport()
 

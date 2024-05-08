@@ -4,18 +4,18 @@ signal player_died
 
 @onready var state_machine: CharacterStateMachine = $CharacterStateMachine
 
-@export_category("Player settings")
-@export var player_speed: float = 250.0
-@export var jump_velocity: float = -200.0
-@export var double_jump_velocity_horizontal: float = 50
-@export var double_jump_velocity_vertical: float = -150
+#@export_category("Player settings")
+var player_speed: float = 130.0
+var jump_velocity: float = -250.0
+var double_jump_velocity_horizontal: float = 50
+var double_jump_velocity_vertical: float = -150
 
 var locked_abilities = ["OnWall", "Dash", "Fireball"]
 var unlocked_abilities = []
 #var cores_picked_up: int = 0
 var direction: Vector2 = Vector2.ZERO
 var sword_position: float
-var max_health: int = 100
+var max_health: int = 50
 var current_health: int
 var invulnerable: bool = false
 var facing_right: bool = false
@@ -28,7 +28,8 @@ func _ready():
 	sword_position = $Sword/SwordHitbox.position.x
 	$AnimationTree.active = true
 	$HealthAndShieldNode.set_health(max_health)
-
+	#$RemoteTransform2D.remote_path = get_tree().root.find_child("Camera2D")
+	
 func _physics_process(delta):
 	$HealthAndShieldNode.is_dead()
 	# Add the gravity.
@@ -134,34 +135,9 @@ func _on_health_and_shield_node_has_died():
 	queue_free()
 	player_died.emit()
 
-#func _on_animation_player_animation_finished(anim_name):
-	#print("Animation done, which is it")
-	#if anim_name == "Death":
-		#queue_free()
-		#player_died.emit()
-		
-		
+
 func _on_invulnerability_timer_timeout():
 	invulnerable = false
-
-#func _on_zebron_core_pickup_picked_up():
-	#print("Picked up core number one!")
-	#cores_picked_up += 1
-#
-#
-#func _on_zebron_core_pickup_2_picked_up():
-	#print("Picked up core number two!")
-	#cores_picked_up += 1
-#
-#
-#func _on_zebron_core_pickup_3_picked_up():
-	#print("Picked up core number three!")
-	#cores_picked_up += 1
-#
-#
-#func _on_zebron_core_pickup_4_picked_up():
-	#print("Picked up core number four!")
-	#cores_picked_up += 1
 
 ##Set ID and proximity flag of player when collision with respawn point collision shape
 func _on_respawn_point_player_detected(ID):
@@ -170,8 +146,27 @@ func _on_respawn_point_player_detected(ID):
 	is_in_respawn_point = true
 
 ##Remove ID and proximity flag of player when collision with respawn point collision shape
-func _on_respawn_point_player_left(_ID):
-	print("Player left vicinity of respawn point: ")
+func _on_respawn_point_player_left(ID):
+	print("Player left vicinity of respawn point: ", ID)
 	respawn_point_ID = ""
 	is_in_respawn_point = false
 
+func _on_respawn_point_2_player_detected(ID):
+	print("Player entered vicinity of respawn point", ID)
+	respawn_point_ID = ID
+	is_in_respawn_point = true
+
+func _on_respawn_point_2_player_left(ID):
+	print("Player left vicinity of respawn point: ", ID)
+	respawn_point_ID = ""
+	is_in_respawn_point = false
+
+func _on_respawn_point_3_player_detected(ID):
+	print("Player entered vicinity of respawn point", ID)
+	respawn_point_ID = ID
+	is_in_respawn_point = true
+
+func _on_respawn_point_3_player_left(ID):
+	print("Player left vicinity of respawn point: ", ID)
+	respawn_point_ID = ""
+	is_in_respawn_point = false

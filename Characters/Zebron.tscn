@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://0stnqh4hd55c"]
+[gd_scene load_steps=46 format=3 uid="uid://0stnqh4hd55c"]
 
 [ext_resource type="Script" path="res://Characters/Zebron/Scripts/Zebron.gd" id="1_yg57j"]
 [ext_resource type="Texture2D" uid="uid://ddbq7rglt5rx6" path="res://Art/Zebron.png" id="2_531b3"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://Characters/Zebron/Scripts/TeleportState.gd" id="8_wl4g3"]
 [ext_resource type="Script" path="res://Characters/Zebron/Scripts/ShootState.gd" id="10_82xqc"]
 [ext_resource type="Script" path="res://Characters/Zebron/Scripts/TentacleState.gd" id="12_18law"]
+[ext_resource type="PackedScene" uid="uid://ce2ci3kowq5cs" path="res://HUD Elements/boss_healthbar.tscn" id="12_fwj7m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sobi5"]
 size = Vector2(78, 70)
@@ -295,7 +296,7 @@ animations = [{
 
 [node name="ZebronBoss" type="CharacterBody2D" groups=["Damageable"]]
 collision_layer = 16
-collision_mask = 17
+collision_mask = 35
 script = ExtResource("1_yg57j")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -303,7 +304,14 @@ shape = SubResource("RectangleShape2D_sobi5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_p8fay")
-animation = &"Uncloaked_Idle"
+animation = &"Tentacle"
+frame_progress = 0.526197
+
+[node name="Boss Healthbar" parent="." instance=ExtResource("12_fwj7m")]
+offset_left = -127.0
+offset_top = -145.0
+offset_right = 129.0
+offset_bottom = -81.0
 
 [node name="Label" type="Label" parent="." node_paths=PackedStringArray("state_machine", "Character")]
 offset_left = -20.0
@@ -320,7 +328,7 @@ Character = NodePath("..")
 script = ExtResource("3_entuc")
 animated_sprite = NodePath("../AnimatedSprite2D")
 character = NodePath("..")
-initial_state = NodePath("Idle")
+initial_state = NodePath("Tentacle")
 
 [node name="Idle" type="Node" parent="CharacterStateMachine"]
 script = ExtResource("7_5g38m")
@@ -357,6 +365,30 @@ one_shot = true
 [node name="Tentacle" type="Node" parent="CharacterStateMachine"]
 script = ExtResource("12_18law")
 
+[node name="Marker2D" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
+position = Vector2(-110, 0)
+
+[node name="Marker2D2" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
+position = Vector2(98, 0)
+
+[node name="Marker2D3" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
+position = Vector2(-197, 0)
+
+[node name="Marker2D4" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
+position = Vector2(187, 0)
+
+[node name="Marker2D5" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
+position = Vector2(-281, 0)
+
+[node name="Marker2D6" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
+position = Vector2(285, 0)
+
+[node name="Marker2D7" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
+position = Vector2(-365, 0)
+
+[node name="Marker2D8" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
+position = Vector2(369, 0)
+
 [node name="Node5" type="Node" parent="CharacterStateMachine"]
 
 [node name="Node3" type="Node" parent="CharacterStateMachine"]
@@ -365,6 +397,7 @@ script = ExtResource("12_18law")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="CharacterStateMachine/Teleport" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="CharacterStateMachine/Shoot" method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="CharacterStateMachine/Tentacle" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="has_died" from="HealthAndShieldNode" to="." method="_on_health_and_shield_node_has_died"]
 [connection signal="health_changed" from="HealthAndShieldNode" to="." method="_on_health_and_shield_node_health_changed"]
 [connection signal="timeout" from="CharacterStateMachine/Idle/RestTimer" to="CharacterStateMachine/Idle" method="_on_rest_timer_timeout"]

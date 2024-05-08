@@ -27,3 +27,8 @@ func _on_cooldown_timer_timeout():
 
 func on_exit():
 	character.find_child("Sword").monitoring = false
+
+
+func _on_melee_area_body_entered(body):
+	if body.is_in_group("Player"):
+		Transitioned.emit(self, self)

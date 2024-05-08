@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://4qivtkdgjw3m"]
+[gd_scene load_steps=47 format=3 uid="uid://4qivtkdgjw3m"]
 
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/Mummy.gd" id="1_pm5yw"]
 [ext_resource type="Texture2D" uid="uid://ddvnnvbvhjg50" path="res://Art/5 Mummy/Mummy_attack.png" id="2_mh021"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/MummyLabel.gd" id="14_7c4l5"]
 [ext_resource type="PackedScene" uid="uid://maiybgvaa00l" path="res://HUD Elements/enemy_healthbar.tscn" id="16_aw4b6"]
 [ext_resource type="AudioStream" uid="uid://dgc3llxav77eh" path="res://Music/Fireball_Impact.wav" id="18_umyq0"]
+[ext_resource type="Script" path="res://Characters/Enemies/Scripts/Raycast_Player_detector.gd" id="19_rciwm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qbdn4"]
 atlas = ExtResource("2_mh021")
@@ -131,7 +132,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Attack",
-"speed": 7.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -224,7 +225,7 @@ size = Vector2(27.5, 45)
 size = Vector2(16, 39.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dfghk"]
-size = Vector2(438.375, 34.4375)
+size = Vector2(45, 43)
 
 [node name="Mummy" type="CharacterBody2D" groups=["Damageable"]]
 collision_layer = 4
@@ -235,9 +236,7 @@ script = ExtResource("1_pm5yw")
 position = Vector2(0, -36)
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_fndbl")
-animation = &"Hurt"
-frame = 4
-frame_progress = 1.0
+animation = &"Attack"
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2(16.25, -23.5)
@@ -310,12 +309,12 @@ script = ExtResource("14_7c4l5")
 state_machine = NodePath("../CharacterStateMachine")
 Character = NodePath("..")
 
-[node name="AggroArea" type="Area2D" parent="."]
+[node name="MeleeArea" type="Area2D" parent="."]
 collision_layer = 4
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AggroArea"]
-position = Vector2(0, -17)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeArea"]
+position = Vector2(7.5, -21.5)
 shape = SubResource("RectangleShape2D_dfghk")
 
 [node name="Enemy Healthbar" parent="." instance=ExtResource("16_aw4b6")]
@@ -328,11 +327,27 @@ offset_bottom = -60.0
 stream = ExtResource("18_umyq0")
 volume_db = 5.0
 
+[node name="RayCast2D_Left" type="RayCast2D" parent="."]
+position = Vector2(6, -34)
+target_position = Vector2(-206, 0)
+collision_mask = 2
+script = ExtResource("19_rciwm")
+
+[node name="RayCast2D_Right" type="RayCast2D" parent="."]
+position = Vector2(7, -34)
+target_position = Vector2(200, -1)
+collision_mask = 2
+script = ExtResource("19_rciwm")
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="CharacterStateMachine/Attack" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="Sword" to="Sword" method="_on_body_entered"]
 [connection signal="timeout" from="CharacterStateMachine/Attack/CooldownTimer" to="CharacterStateMachine/Attack" method="_on_cooldown_timer_timeout"]
 [connection signal="timeout" from="CharacterStateMachine/Attack/WindupTimer" to="CharacterStateMachine/Attack" method="_on_windup_timer_timeout"]
 [connection signal="has_died" from="HealthAndShieldNode" to="." method="_on_health_and_shield_node_has_died"]
 [connection signal="health_changed" from="HealthAndShieldNode" to="." method="_on_health_and_shield_node_health_changed"]
-[connection signal="body_entered" from="AggroArea" to="." method="_on_aggro_area_body_entered"]
-[connection signal="body_exited" from="AggroArea" to="." method="_on_aggro_area_body_exited"]
+[connection signal="body_entered" from="MeleeArea" to="CharacterStateMachine/Walk" method="_on_melee_area_body_entered"]
+[connection signal="body_entered" from="MeleeArea" to="CharacterStateMachine/Attack" method="_on_melee_area_body_entered"]
+[connection signal="player_detected" from="RayCast2D_Left" to="." method="_on_ray_cast_2d_left_player_detected"]
+[connection signal="player_not_detected" from="RayCast2D_Left" to="." method="_on_ray_cast_2d_left_player_not_detected"]
+[connection signal="player_detected" from="RayCast2D_Right" to="." method="_on_ray_cast_2d_right_player_detected"]
+[connection signal="player_not_detected" from="RayCast2D_Right" to="." method="_on_ray_cast_2d_right_player_not_detected"]

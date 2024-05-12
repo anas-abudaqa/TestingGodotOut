@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://4qivtkdgjw3m"]
+[gd_scene load_steps=47 format=3 uid="uid://4qivtkdgjw3m"]
 
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/Mummy.gd" id="1_pm5yw"]
 [ext_resource type="Texture2D" uid="uid://ddvnnvbvhjg50" path="res://Art/5 Mummy/Mummy_attack.png" id="2_mh021"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://7xerlfu54o28" path="res://Art/5 Mummy/Mummy_idle.png" id="5_imbwc"]
 [ext_resource type="Texture2D" uid="uid://ca36er1o7woda" path="res://Art/5 Mummy/Mummy_walk.png" id="6_mvtpf"]
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/MummySword.gd" id="7_gpus8"]
-[ext_resource type="Texture2D" uid="uid://b830b2jwp8kns" path="res://Art/Spikes.png" id="8_krsnk"]
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/MummyStateMachine.gd" id="8_yu201"]
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/MummyIdle.gd" id="9_rf4tt"]
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/MummyWalk.gd" id="10_1gb5r"]
@@ -223,10 +222,10 @@ animations = [{
 size = Vector2(27.5, 45)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s0o6u"]
-size = Vector2(16, 39.5)
+size = Vector2(18, 38.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dfghk"]
-size = Vector2(45, 43)
+size = Vector2(50, 42)
 
 [node name="Mummy" type="CharacterBody2D" groups=["Damageable"]]
 collision_layer = 4
@@ -247,19 +246,13 @@ debug_color = Color(0.65098, 0.513726, 0.160784, 0.419608)
 [node name="Sword" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
-monitoring = false
 script = ExtResource("7_gpus8")
 
 [node name="SwordHitbox" type="CollisionShape2D" parent="Sword"]
-position = Vector2(-11, -26.25)
+position = Vector2(-12, -25.75)
 shape = SubResource("RectangleShape2D_s0o6u")
+disabled = true
 debug_color = Color(0.819608, 0.223529, 0.831373, 0.419608)
-
-[node name="Sprite2D" type="Sprite2D" parent="Sword/SwordHitbox"]
-visible = false
-position = Vector2(0.5, -3.75)
-scale = Vector2(1.6875, 3)
-texture = ExtResource("8_krsnk")
 
 [node name="CharacterStateMachine" type="Node" parent="." node_paths=PackedStringArray("animated_sprite", "character", "initial_state")]
 script = ExtResource("8_yu201")
@@ -273,22 +266,24 @@ walk_state = NodePath("../Walk")
 hurt_state = NodePath("../Hurt")
 can_move = false
 
-[node name="Walk" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("attack_state", "hurt_state", "idle_state")]
+[node name="Walk" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("attack_state", "hurt_state", "idle_state", "melee_area")]
 script = ExtResource("10_1gb5r")
 attack_state = NodePath("../Attack")
 hurt_state = NodePath("../Hurt")
 idle_state = NodePath("../Idle")
+melee_area = NodePath("../../MeleeArea")
 
-[node name="Attack" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("idle_state", "hurt_state")]
+[node name="Attack" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("idle_state", "hurt_state", "SwordHitBox")]
 script = ExtResource("11_iuc32")
 idle_state = NodePath("../Idle")
 hurt_state = NodePath("../Hurt")
+SwordHitBox = NodePath("../../Sword/SwordHitbox")
 can_move = false
 
 [node name="CooldownTimer" type="Timer" parent="CharacterStateMachine/Attack"]
 
 [node name="WindupTimer" type="Timer" parent="CharacterStateMachine/Attack"]
-wait_time = 0.6
+wait_time = 0.4
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CharacterStateMachine/Attack"]
 stream = ExtResource("13_1n088")
@@ -306,6 +301,7 @@ volume_db = 1.0
 [node name="HealthAndShieldNode" parent="." instance=ExtResource("13_pc0wp")]
 
 [node name="Label" type="Label" parent="." node_paths=PackedStringArray("state_machine", "Character")]
+visible = false
 offset_left = -20.0
 offset_top = -109.0
 offset_right = 20.0
@@ -319,7 +315,7 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeArea"]
-position = Vector2(7.5, -21.5)
+position = Vector2(5, -22)
 shape = SubResource("RectangleShape2D_dfghk")
 
 [node name="Enemy Healthbar" parent="." instance=ExtResource("16_aw4b6")]

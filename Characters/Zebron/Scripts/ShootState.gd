@@ -62,7 +62,7 @@ func _on_animated_sprite_2d_animation_finished():
 
 func _on_cooldown_timer_timeout():
 	print(character.teleport_shot_counter)
-	if character.teleport_shot_counter <= 5:
+	if character.teleport_shot_counter <= 3:
 		#create_direction_vector()
 		#animated_sprite.play("Shoot")
 		Transitioned.emit(self, teleport_state)

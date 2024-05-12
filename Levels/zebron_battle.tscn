@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cjfxwn0khlfln"]
+[gd_scene load_steps=13 format=3 uid="uid://cjfxwn0khlfln"]
 
 [ext_resource type="Script" path="res://Levels/Scripts/ZebronBattle.gd" id="1_2e31c"]
 [ext_resource type="Texture2D" uid="uid://dw7ur0pcr26m2" path="res://Abstract Levels/Tilesheet/tilesheet_complete.png" id="1_c3k06"]
@@ -7,6 +7,9 @@
 [ext_resource type="AudioStream" uid="uid://cm4qiwad4ujy6" path="res://Music/the-final-boss-battle-158700.wav" id="5_85pwi"]
 [ext_resource type="Texture2D" uid="uid://d3c5j66w046xf" path="res://Art/UI/YouDied.png" id="6_jsmwn"]
 [ext_resource type="Texture2D" uid="uid://cg5b14160um1c" path="res://Art/UI/Respawn.png" id="6_oow5m"]
+[ext_resource type="Texture2D" uid="uid://xepfr4gmkimx" path="res://Art/UI/Thanks.png" id="8_n1l1u"]
+[ext_resource type="Texture2D" uid="uid://d4gh673qx7bfs" path="res://Art/UI/ZebronDefeated.png" id="9_usvio"]
+[ext_resource type="Texture2D" uid="uid://lvy5772uqex6" path="res://Art/MR-Platformer-PixelAssets-V1/Backgrounds/merged-full-background.png" id="10_nq7ct"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fvo0w"]
 texture = ExtResource("1_c3k06")
@@ -10084,14 +10087,38 @@ texture_normal = ExtResource("6_oow5m")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 0
-
 [node name="DeathScreenTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="Thanks" type="TextureRect" parent="."]
+offset_left = -185.0
+offset_top = -104.0
+offset_right = 178.0
+offset_bottom = -49.0
+texture = ExtResource("8_n1l1u")
+expand_mode = 1
+
+[node name="ZebronDied" type="TextureRect" parent="."]
+offset_left = -220.0
+offset_top = -191.0
+offset_right = 227.0
+offset_bottom = -134.0
+texture = ExtResource("9_usvio")
+expand_mode = 1
+
+[node name="ZebronDeathTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Background" type="Sprite2D" parent="."]
+modulate = Color(0.521569, 0.309804, 1, 1)
+show_behind_parent = true
+position = Vector2(4.99999, -42)
+scale = Vector2(5.00588, 3.9875)
+texture = ExtResource("10_nq7ct")
 
 [connection signal="ZebronDead" from="ZebronBoss" to="." method="_on_zebron_boss_zebron_dead"]
 [connection signal="player_died" from="PlayerMax" to="." method="_on_player_max_player_died"]
 [connection signal="player_died" from="PlayerMax" to="ZebronBoss" method="_on_player_max_player_died"]
 [connection signal="pressed" from="RespawnButton" to="." method="_on_respawn_button_pressed"]
 [connection signal="timeout" from="DeathScreenTimer" to="." method="_on_death_screen_timer_timeout"]
+[connection signal="timeout" from="ZebronDeathTimer" to="." method="_on_zebron_death_timer_timeout"]

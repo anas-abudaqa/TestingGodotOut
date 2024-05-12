@@ -4,7 +4,7 @@ const SPEED: int = 250
 
 var projectile_speed_y: float = 0
 var projectile_speed: float = 0
-var projectile_damage: int = 10
+var projectile_damage: int = 20
 var y_axis_offset: float = 0
 # Called when the node enters the scene tree for the first time.
 

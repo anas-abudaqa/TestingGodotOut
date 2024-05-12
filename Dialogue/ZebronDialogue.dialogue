@@ -25,6 +25,7 @@ Sorcerer: You need to find the 4 magic cores to restore stability to the region.
 #if MainLevel.Zebron_first_interaction == "done":
 Sorcerer: You did it!
 Sorcerer: You collected all 4 of my cores.
-Zebron: So gullible, now you lose
+Zebron: Thanks for reviving me.
+Zebron: Now perish 
 do MainLevel.trigger_Zebron_battle()
 => END

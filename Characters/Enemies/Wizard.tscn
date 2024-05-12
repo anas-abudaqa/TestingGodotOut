@@ -282,6 +282,7 @@ position = Vector2(0, -24)
 shape = SubResource("RectangleShape2D_jcncy")
 
 [node name="Label" type="Label" parent="." node_paths=PackedStringArray("state_machine", "Character")]
+visible = false
 offset_left = -3.0
 offset_top = -102.0
 offset_right = 37.0

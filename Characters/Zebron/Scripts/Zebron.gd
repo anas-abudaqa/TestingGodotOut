@@ -8,7 +8,7 @@ signal GoToIdle
 @export var spawn_point: Marker2D
 
 const SPEED = 200.0
-const VERTICAL_SPEED = 150.0
+const VERTICAL_SPEED = 140.0
 const CONTACT_DAMAGE = 10
 var maximum_health: float = 200
 var current_health: float = 0
@@ -75,10 +75,11 @@ func _on_health_and_shield_node_health_changed(curr_health, max_health):
 
 
 func _on_health_and_shield_node_has_died():
-	$AnimatedSprite2D.play("Death")
-	await $AnimatedSprite2D.animation_finished
+	#$AnimatedSprite2D.play("Death")
+	#await $AnimatedSprite2D.animation_finished
 	ZebronDead.emit()
-	#queue_free()
+	GoToIdle.emit()
+	queue_free()
 
 
 #func _on_player_player_died():

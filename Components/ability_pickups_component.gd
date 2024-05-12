@@ -18,7 +18,10 @@ func lock_ability():
 
 ## on collision, call unlock ability function and delete the pick up
 func _on_body_entered(body):
-	if body.name == "Player":
+	print("Something came inside me")
+	if body.is_in_group("Player"):
 		print("Picked up ", ability_name)
 		unlock_ability()
 		queue_free()
+
+

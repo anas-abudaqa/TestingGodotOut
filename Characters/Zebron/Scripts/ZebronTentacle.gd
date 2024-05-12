@@ -1,5 +1,5 @@
 extends Area2D
-var tentacle_damage = 15
+var tentacle_damage = 25
 signal TentacleDespawned
 
 func _ready():

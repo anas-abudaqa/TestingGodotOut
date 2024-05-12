@@ -18,7 +18,7 @@ func spawn_tentacles():
 			var tentacle = tentacle_scene.instantiate()
 			character.add_child(tentacle)
 			tentacle.spawn(child.global_position)
-			tentacle.connect("TentacleDespawned", spawn_tentacles_2)
+			tentacle.connect("TentacleDespawned", move_to_idle_state)
 
 
 func spawn_tentacles_2():

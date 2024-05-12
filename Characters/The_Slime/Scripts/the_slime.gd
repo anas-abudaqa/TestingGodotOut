@@ -5,9 +5,9 @@ signal SlimeDead
 signal aggrod
 
 #@export var playerbody: CharacterBody2D
-const SPEED = 175.0
+const SPEED = 200.0
 const VERTICAL_SPEED = 150.0
-const CONTACT_DAMAGE = 5
+const CONTACT_DAMAGE = 10
 var is_aggrod: bool = false
 var maximum_health: float = 80
 var current_health: float = 0
@@ -71,6 +71,7 @@ func _on_health_and_shield_node_health_changed(curr_health, max_health):
 
 
 func _on_health_and_shield_node_has_died():
+	$Hitbox/CollisionShape2D2.set_deferred("disabled", true)
 	$AnimatedSprite2D.play("Death")
 	await $AnimatedSprite2D.animation_finished
 	SlimeDead.emit()

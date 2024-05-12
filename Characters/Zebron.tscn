@@ -18,7 +18,7 @@
 [ext_resource type="Script" path="res://Characters/Zebron/Scripts/StopState.gd" id="16_2hfr3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sobi5"]
-size = Vector2(78, 70)
+size = Vector2(78, 89)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o0awj"]
 atlas = ExtResource("2_531b3")
@@ -380,6 +380,7 @@ collision_mask = 35
 script = ExtResource("1_yg57j")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 9.5)
 shape = SubResource("RectangleShape2D_sobi5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -395,6 +396,7 @@ offset_right = 129.0
 offset_bottom = -81.0
 
 [node name="Label" type="Label" parent="." node_paths=PackedStringArray("state_machine", "Character")]
+visible = false
 offset_left = -20.0
 offset_top = -116.0
 offset_right = 20.0

@@ -10,7 +10,7 @@ signal core_picked_up
 @onready var state_machine: CharacterStateMachine = $CharacterStateMachine
 
 #@export_category("Player settings")
-var player_speed: float = 130.0
+var player_speed: float = 150.0
 var jump_velocity: float = -250.0
 var double_jump_velocity_horizontal: float = 50
 var double_jump_velocity_vertical: float = -200
@@ -51,9 +51,9 @@ func _physics_process(delta):
 			#run action method
 			actionables[0].action()
 		
-		##Check if we are in a respawn point. If so, run the set active respawn point in the Level script
-		if is_in_respawn_point:
-			get_parent().set_active_respawn_point(respawn_point_ID)
+		###Check if we are in a respawn point. If so, run the set active respawn point in the Level script
+		#if is_in_respawn_point:
+			#get_parent().set_active_respawn_point(respawn_point_ID)
 		
 		
 	direction = Input.get_vector("Left", "Right", "Up", "Down") #-1, +1, -1, +1
@@ -108,27 +108,22 @@ func become_invulnerable():
 	$InvulnerabilityTimer.start()
 	invulnerable = true
 
+
 func _on_health_and_shield_node_health_changed(health, max_hp):
 	current_health = health
 	max_health = max_hp
 
 
-func _on_pick_up_ability_unlocked(ability_name):
-	locked_abilities.erase(ability_name)
-	unlocked_abilities.append(ability_name)
-	$CharacterStateMachine.unlock_state(ability_name)
-	print(unlocked_abilities)
-
-
-func _on_dash_pick_up_ability_unlocked(ability_name):
-	locked_abilities.erase(ability_name)
-	unlocked_abilities.append(ability_name)
-	$CharacterStateMachine.unlock_state(ability_name)
-	print(unlocked_abilities)
-
-
-func _on_fireball_pick_up_ability_unlocked(ability_name):
-	unlock_ability(ability_name)
+#func _on_pick_up_ability_unlocked(ability_name):
+	#unlock_ability(ability_name)
+#
+#
+#func _on_dash_pick_up_ability_unlocked(ability_name):
+	#unlock_ability(ability_name)
+#
+#
+#func _on_fireball_pick_up_ability_unlocked(ability_name):
+	#unlock_ability(ability_name)
 
 
 func _on_terrain_detector_entered_lava():
@@ -152,37 +147,37 @@ func _on_health_and_shield_node_has_died():
 func _on_invulnerability_timer_timeout():
 	invulnerable = false
 
-##Set ID and proximity flag of player when collision with respawn point collision shape
-func _on_respawn_point_player_detected(ID):
-	print("Player entered vicinity of respawn point", ID)
-	respawn_point_ID = ID
-	is_in_respawn_point = true
-
-##Remove ID and proximity flag of player when collision with respawn point collision shape
-func _on_respawn_point_player_left(ID):
-	print("Player left vicinity of respawn point: ", ID)
-	respawn_point_ID = ""
-	is_in_respawn_point = false
-
-func _on_respawn_point_2_player_detected(ID):
-	print("Player entered vicinity of respawn point", ID)
-	respawn_point_ID = ID
-	is_in_respawn_point = true
-
-func _on_respawn_point_2_player_left(ID):
-	print("Player left vicinity of respawn point: ", ID)
-	respawn_point_ID = ""
-	is_in_respawn_point = false
-
-func _on_respawn_point_3_player_detected(ID):
-	print("Player entered vicinity of respawn point", ID)
-	respawn_point_ID = ID
-	is_in_respawn_point = true
-
-func _on_respawn_point_3_player_left(ID):
-	print("Player left vicinity of respawn point: ", ID)
-	respawn_point_ID = ""
-	is_in_respawn_point = false
+###Set ID and proximity flag of player when collision with respawn point collision shape
+#func _on_respawn_point_player_detected(ID):
+	#print("Player entered vicinity of respawn point", ID)
+	#respawn_point_ID = ID
+	#is_in_respawn_point = true
+#
+###Remove ID and proximity flag of player when collision with respawn point collision shape
+#func _on_respawn_point_player_left(ID):
+	#print("Player left vicinity of respawn point: ", ID)
+	#respawn_point_ID = ""
+	#is_in_respawn_point = false
+#
+#func _on_respawn_point_2_player_detected(ID):
+	#print("Player entered vicinity of respawn point", ID)
+	#respawn_point_ID = ID
+	#is_in_respawn_point = true
+#
+#func _on_respawn_point_2_player_left(ID):
+	#print("Player left vicinity of respawn point: ", ID)
+	#respawn_point_ID = ""
+	#is_in_respawn_point = false
+#
+#func _on_respawn_point_3_player_detected(ID):
+	#print("Player entered vicinity of respawn point", ID)
+	#respawn_point_ID = ID
+	#is_in_respawn_point = true
+#
+#func _on_respawn_point_3_player_left(ID):
+	#print("Player left vicinity of respawn point: ", ID)
+	#respawn_point_ID = ""
+	#is_in_respawn_point = false
 
 
 func _on_death_animation_animation_finished():

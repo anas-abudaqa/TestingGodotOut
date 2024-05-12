@@ -747,6 +747,7 @@ stream = ExtResource("16_js1un")
 volume_db = 5.0
 
 [node name="StateDebugLabel" type="Label" parent="." node_paths=PackedStringArray("state_machine", "Character")]
+visible = false
 offset_left = -56.0
 offset_top = -54.0
 offset_right = 42.0

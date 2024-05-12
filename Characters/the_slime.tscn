@@ -141,7 +141,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Death",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -205,12 +205,13 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cdcco"]
-size = Vector2(47, 72)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_noyy2"]
+radius = 25.5
+height = 72.0
 
 [node name="TheSlime" type="CharacterBody2D" groups=["Damageable"]]
 collision_layer = 4
-collision_mask = 35
+collision_mask = 33
 script = ExtResource("1_q4hr7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -251,9 +252,8 @@ one_shot = true
 wait_time = 5.0
 one_shot = true
 
-[node name="ChasePlayer" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("acidshot_state")]
+[node name="ChasePlayer" type="Node" parent="CharacterStateMachine"]
 script = ExtResource("6_pry6y")
-acidshot_state = NodePath("../AcidShot")
 
 [node name="ChaseTimer" type="Timer" parent="CharacterStateMachine/ChasePlayer"]
 wait_time = 0.5
@@ -273,6 +273,7 @@ stream = ExtResource("8_ytopn")
 volume_db = 1.0
 
 [node name="StateDebugLabel" type="Label" parent="." node_paths=PackedStringArray("state_machine", "Character")]
+visible = false
 offset_left = -37.0
 offset_top = -91.0
 offset_right = 37.0
@@ -289,7 +290,7 @@ collision_mask = 2
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(-0.5, -4)
-shape = SubResource("RectangleShape2D_cdcco")
+shape = SubResource("CapsuleShape2D_noyy2")
 
 [node name="RayCast2D_Left" type="RayCast2D" parent="."]
 position = Vector2(2, 15)

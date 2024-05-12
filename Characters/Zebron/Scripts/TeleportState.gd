@@ -9,6 +9,7 @@ var teleport_counter = 0
 
 func on_enter():
 	animated_sprite.play("Disappear")
+	character.find_child("CollisionShape2D").set_deferred("disabled", true)
 	$DisappearAudio.play()
 	
 
@@ -22,7 +23,7 @@ func find_player():
 		Transitioned.emit(self, stop_state)
 	
 func teleport():
-	character.global_position = player_position
+	character.global_position = player_position + Vector2(30, -33)
 	animated_sprite.visible = true
 	animated_sprite.play("Reappear")
 	$ReappearAudio.play()
@@ -50,6 +51,7 @@ func _on_animated_sprite_2d_animation_finished():
 		$InvisibilityTimer.start()
 	##made into elif to avoid bugs	
 	elif animated_sprite.animation == "Reappear":
+		character.find_child("CollisionShape2D").set_deferred("disabled", false)
 		#print("we reappearing nowww")
 		$CoolDownTimer.start()
 

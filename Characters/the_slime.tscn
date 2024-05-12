@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://ivicpf1vfv6y"]
+[gd_scene load_steps=37 format=3 uid="uid://ivicpf1vfv6y"]
 
 [ext_resource type="Texture2D" uid="uid://bgyv50apn6swc" path="res://Art/Ars_Notoria_Enemies/andromalius-57x88.png" id="1_c6yst"]
 [ext_resource type="Script" path="res://Characters/The_Slime/Scripts/the_slime.gd" id="1_q4hr7"]
@@ -8,10 +8,13 @@
 [ext_resource type="Script" path="res://Characters/The_Slime/Scripts/DebugStateLabel.gd" id="6_ksbix"]
 [ext_resource type="Script" path="res://Characters/The_Slime/Scripts/ChasePlayerState.gd" id="6_pry6y"]
 [ext_resource type="Script" path="res://Characters/The_Slime/Scripts/IdleState.gd" id="6_y8mrc"]
+[ext_resource type="AudioStream" uid="uid://cectc1spcrhjr" path="res://Music/TheSlimeProjectile.wav" id="8_ytopn"]
 [ext_resource type="PackedScene" uid="uid://b0glgx3pu4xre" path="res://Components/health&shield_component.tscn" id="9_r45fd"]
+[ext_resource type="Script" path="res://Characters/Enemies/Scripts/Raycast_Player_detector.gd" id="10_mof4u"]
+[ext_resource type="PackedScene" uid="uid://ce2ci3kowq5cs" path="res://HUD Elements/boss_healthbar.tscn" id="11_iqc2h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jsvn8"]
-size = Vector2(38, 74)
+size = Vector2(37, 71)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mxewl"]
 atlas = ExtResource("1_c6yst")
@@ -202,9 +205,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x523f"]
-radius = 21.0
-height = 74.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cdcco"]
+size = Vector2(47, 72)
 
 [node name="TheSlime" type="CharacterBody2D" groups=["Damageable"]]
 collision_layer = 4
@@ -212,10 +214,11 @@ collision_mask = 35
 script = ExtResource("1_q4hr7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, -6)
+position = Vector2(-0.5, -4.5)
 shape = SubResource("RectangleShape2D_jsvn8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.9, 0.9)
 sprite_frames = SubResource("SpriteFrames_qe6m0")
 animation = &"Death"
 frame = 11
@@ -236,9 +239,8 @@ move_state = NodePath("../Move")
 wait_time = 3.0
 one_shot = true
 
-[node name="Move" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("chaseplayer_state", "acidshot_state")]
+[node name="Move" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("acidshot_state")]
 script = ExtResource("5_dxpto")
-chaseplayer_state = NodePath("../ChasePlayer")
 acidshot_state = NodePath("../AcidShot")
 
 [node name="HorizontalMovementTimer" type="Timer" parent="CharacterStateMachine/Move"]
@@ -263,7 +265,12 @@ idle_state = NodePath("../Idle")
 can_move = false
 
 [node name="CooldownTimer" type="Timer" parent="CharacterStateMachine/AcidShot"]
+wait_time = 1.5
 one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CharacterStateMachine/AcidShot"]
+stream = ExtResource("8_ytopn")
+volume_db = 1.0
 
 [node name="StateDebugLabel" type="Label" parent="." node_paths=PackedStringArray("state_machine", "Character")]
 offset_left = -37.0
@@ -277,10 +284,30 @@ Character = NodePath("..")
 [node name="HealthAndShieldNode" parent="." instance=ExtResource("9_r45fd")]
 
 [node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(-1, -6)
-shape = SubResource("CapsuleShape2D_x523f")
+position = Vector2(-0.5, -4)
+shape = SubResource("RectangleShape2D_cdcco")
+
+[node name="RayCast2D_Left" type="RayCast2D" parent="."]
+position = Vector2(2, 15)
+target_position = Vector2(-507, 0)
+collision_mask = 2
+script = ExtResource("10_mof4u")
+
+[node name="RayCast2D_Right" type="RayCast2D" parent="."]
+position = Vector2(0, 15)
+target_position = Vector2(403, 0)
+collision_mask = 2
+script = ExtResource("10_mof4u")
+
+[node name="Boss Healthbar" parent="." instance=ExtResource("11_iqc2h")]
+offset_left = -128.0
+offset_top = -138.0
+offset_right = 128.0
+offset_bottom = -74.0
 
 [connection signal="timeout" from="CharacterStateMachine/Idle/RestTimer" to="CharacterStateMachine/Idle" method="_on_rest_timer_timeout"]
 [connection signal="timeout" from="CharacterStateMachine/Move/HorizontalMovementTimer" to="CharacterStateMachine/Move" method="_on_timer_timeout"]
@@ -291,3 +318,5 @@ shape = SubResource("CapsuleShape2D_x523f")
 [connection signal="has_died" from="HealthAndShieldNode" to="." method="_on_health_and_shield_node_has_died"]
 [connection signal="health_changed" from="HealthAndShieldNode" to="." method="_on_health_and_shield_node_health_changed"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="player_detected" from="RayCast2D_Left" to="." method="_on_ray_cast_2d_left_player_detected"]
+[connection signal="player_detected" from="RayCast2D_Right" to="." method="_on_ray_cast_2d_right_player_detected"]

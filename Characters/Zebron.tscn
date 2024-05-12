@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://0stnqh4hd55c"]
+[gd_scene load_steps=50 format=3 uid="uid://0stnqh4hd55c"]
 
 [ext_resource type="Script" path="res://Characters/Zebron/Scripts/Zebron.gd" id="1_yg57j"]
 [ext_resource type="Texture2D" uid="uid://ddbq7rglt5rx6" path="res://Art/Zebron.png" id="2_531b3"]
@@ -10,8 +10,12 @@
 [ext_resource type="Script" path="res://Characters/Zebron/Scripts/IdleState.gd" id="7_5g38m"]
 [ext_resource type="Script" path="res://Characters/Zebron/Scripts/TeleportState.gd" id="8_wl4g3"]
 [ext_resource type="Script" path="res://Characters/Zebron/Scripts/ShootState.gd" id="10_82xqc"]
+[ext_resource type="AudioStream" uid="uid://qm0ud2f4t3fh" path="res://Music/ZebronDisappear.wav" id="11_mnkxv"]
 [ext_resource type="Script" path="res://Characters/Zebron/Scripts/TentacleState.gd" id="12_18law"]
 [ext_resource type="PackedScene" uid="uid://ce2ci3kowq5cs" path="res://HUD Elements/boss_healthbar.tscn" id="12_fwj7m"]
+[ext_resource type="AudioStream" uid="uid://2diiq40i8vhp" path="res://Music/ZebronReappear.wav" id="12_q6xba"]
+[ext_resource type="AudioStream" uid="uid://dtprydwsby61u" path="res://Music/ZebronShot.wav" id="13_2yfp0"]
+[ext_resource type="Script" path="res://Characters/Zebron/Scripts/StopState.gd" id="16_2hfr3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sobi5"]
 size = Vector2(78, 70)
@@ -182,6 +186,44 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_o0awj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sf814")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xgtji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lrrhb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v5c7k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k3e2y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qkgae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wgpnl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bpria")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6a214")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ayhda")
+}],
+"loop": false,
+"name": &"Disappear_1",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_ayhda")
 }, {
 "duration": 1.0,
@@ -216,6 +258,44 @@ animations = [{
 }],
 "loop": false,
 "name": &"Reappear",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ayhda")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6a214")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bpria")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wgpnl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qkgae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k3e2y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v5c7k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lrrhb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xgtji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sf814")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o0awj")
+}],
+"loop": false,
+"name": &"Reappear_1",
 "speed": 20.0
 }, {
 "frames": [{
@@ -295,7 +375,7 @@ animations = [{
 }]
 
 [node name="ZebronBoss" type="CharacterBody2D" groups=["Damageable"]]
-collision_layer = 16
+collision_layer = 4
 collision_mask = 35
 script = ExtResource("1_yg57j")
 
@@ -304,8 +384,9 @@ shape = SubResource("RectangleShape2D_sobi5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_p8fay")
-animation = &"Tentacle"
-frame_progress = 0.526197
+animation = &"Reappear_1"
+frame = 10
+frame_progress = 1.0
 
 [node name="Boss Healthbar" parent="." instance=ExtResource("12_fwj7m")]
 offset_left = -127.0
@@ -328,18 +409,21 @@ Character = NodePath("..")
 script = ExtResource("3_entuc")
 animated_sprite = NodePath("../AnimatedSprite2D")
 character = NodePath("..")
-initial_state = NodePath("Tentacle")
+initial_state = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="CharacterStateMachine"]
+[node name="Idle" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("teleport_state")]
 script = ExtResource("7_5g38m")
+teleport_state = NodePath("../Teleport")
 
 [node name="RestTimer" type="Timer" parent="CharacterStateMachine/Idle"]
+wait_time = 2.0
 one_shot = true
 
-[node name="Teleport" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("idle_state", "shoot_state")]
+[node name="Teleport" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("idle_state", "shoot_state", "stop_state")]
 script = ExtResource("8_wl4g3")
 idle_state = NodePath("../Idle")
 shoot_state = NodePath("../Shoot")
+stop_state = NodePath("../Stop")
 
 [node name="InvisibilityTimer" type="Timer" parent="CharacterStateMachine/Teleport"]
 wait_time = 0.5
@@ -353,48 +437,69 @@ one_shot = true
 wait_time = 0.1
 one_shot = true
 
-[node name="Shoot" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("teleport_state", "idle_state")]
+[node name="DisappearAudio" type="AudioStreamPlayer" parent="CharacterStateMachine/Teleport"]
+stream = ExtResource("11_mnkxv")
+volume_db = 2.0
+
+[node name="ReappearAudio" type="AudioStreamPlayer" parent="CharacterStateMachine/Teleport"]
+stream = ExtResource("12_q6xba")
+volume_db = 2.0
+
+[node name="Shoot" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("teleport_state", "tentacle_state")]
 script = ExtResource("10_82xqc")
 teleport_state = NodePath("../Teleport")
-idle_state = NodePath("../Idle")
+tentacle_state = NodePath("../Tentacle")
+
+[node name="ShootAudio" type="AudioStreamPlayer" parent="CharacterStateMachine/Shoot"]
+stream = ExtResource("13_2yfp0")
+volume_db = 2.0
 
 [node name="CooldownTimer" type="Timer" parent="CharacterStateMachine/Shoot"]
+wait_time = 0.8
+one_shot = true
+
+[node name="Tentacle" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("idle_state")]
+script = ExtResource("12_18law")
+idle_state = NodePath("../Idle")
+
+[node name="Marker2D" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
+position = Vector2(-75, -35)
+
+[node name="Marker2D2" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
+position = Vector2(75, -35)
+
+[node name="Marker2D3" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
+position = Vector2(-140, -35)
+
+[node name="Marker2D4" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
+position = Vector2(140, -35)
+
+[node name="Marker2D5" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
+position = Vector2(-205, -35)
+
+[node name="Marker2D6" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
+position = Vector2(205, -35)
+
+[node name="Timer" type="Timer" parent="CharacterStateMachine/Tentacle"]
 wait_time = 0.1
 one_shot = true
 
-[node name="Tentacle" type="Node" parent="CharacterStateMachine"]
-script = ExtResource("12_18law")
+[node name="DisappearAudio" type="AudioStreamPlayer" parent="CharacterStateMachine/Tentacle"]
+stream = ExtResource("11_mnkxv")
+volume_db = 2.0
 
-[node name="Marker2D" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
-position = Vector2(-110, 0)
+[node name="ReappearAudio" type="AudioStreamPlayer" parent="CharacterStateMachine/Tentacle"]
+stream = ExtResource("12_q6xba")
+volume_db = 2.0
 
-[node name="Marker2D2" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
-position = Vector2(98, 0)
-
-[node name="Marker2D3" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
-position = Vector2(-197, 0)
-
-[node name="Marker2D4" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
-position = Vector2(187, 0)
-
-[node name="Marker2D5" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
-position = Vector2(-281, 0)
-
-[node name="Marker2D6" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
-position = Vector2(285, 0)
-
-[node name="Marker2D7" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
-position = Vector2(-365, 0)
-
-[node name="Marker2D8" type="Marker2D" parent="CharacterStateMachine/Tentacle"]
-position = Vector2(369, 0)
-
-[node name="Node5" type="Node" parent="CharacterStateMachine"]
+[node name="Stop" type="Node" parent="CharacterStateMachine"]
+script = ExtResource("16_2hfr3")
 
 [node name="Node3" type="Node" parent="CharacterStateMachine"]
 
 [node name="Node2" type="Node" parent="CharacterStateMachine"]
 
+[connection signal="GoToIdle" from="." to="CharacterStateMachine" method="_on_zebron_boss_go_to_idle"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="CharacterStateMachine/Teleport" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="CharacterStateMachine/Shoot" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="CharacterStateMachine/Tentacle" method="_on_animated_sprite_2d_animation_finished"]
@@ -405,3 +510,4 @@ position = Vector2(369, 0)
 [connection signal="timeout" from="CharacterStateMachine/Teleport/ReemergenceTimer" to="CharacterStateMachine/Teleport" method="_on_reemergence_timer_timeout"]
 [connection signal="timeout" from="CharacterStateMachine/Teleport/CoolDownTimer" to="CharacterStateMachine/Teleport" method="_on_cool_down_timer_timeout"]
 [connection signal="timeout" from="CharacterStateMachine/Shoot/CooldownTimer" to="CharacterStateMachine/Shoot" method="_on_cooldown_timer_timeout"]
+[connection signal="timeout" from="CharacterStateMachine/Tentacle/Timer" to="CharacterStateMachine/Tentacle" method="_on_timer_timeout"]

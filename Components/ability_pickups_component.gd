@@ -9,6 +9,7 @@ signal ability_locked
 func set_ability_name(ability):
 	ability_name = ability
 
+
 func unlock_ability():
 	ability_unlocked.emit(ability_name)
 	

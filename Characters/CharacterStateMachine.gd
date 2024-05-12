@@ -54,7 +54,7 @@ func on_state_transition(calling_state : State, next_state : State):
 		print("Error: Next state - ", next_state, " - is not in the State Array")
 		return
 		
-	print("Transitioning from ", current_state, " to ", next_state)
+	#print("Transitioning from ", current_state, " to ", next_state)
 	
 	## Call on_exit function of current state
 	current_state.on_exit()

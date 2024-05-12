@@ -132,15 +132,15 @@ animations = [{
 radius = 5.0
 
 [node name="AcidBullets" type="Area2D" groups=["Projectile"]]
-collision_layer = 36
+scale = Vector2(2, 2)
+collision_layer = 32
 collision_mask = 35
 script = ExtResource("1_jfemd")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_umw2v")
 animation = &"Explode"
-frame = 3
-frame_progress = 0.280362
+frame_progress = 0.183791
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_lfxyt")

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c1gdodw17uuwr"
+path="res://.godot/imported/pepSound3.mp3-3a073a8f64abd9070ca63ee382809df1.mp3str"
+
+[deps]
+
+source_file="res://Music/Digital SFX Set/pepSound3.mp3"
+dest_files=["res://.godot/imported/pepSound3.mp3-3a073a8f64abd9070ca63ee382809df1.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

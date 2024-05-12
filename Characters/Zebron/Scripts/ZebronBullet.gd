@@ -1,6 +1,6 @@
 extends Area2D
 
-const SPEED: int = 350
+const SPEED: int = 250
 
 var projectile_speed_y: float = 0
 var projectile_speed: float = 0
@@ -31,7 +31,6 @@ func set_direction(direction: Vector2):
 	if direction.x == +1:
 		print("GO RIGHT ", direction.x)
 		projectile_speed = SPEED
-		projectile_speed_y = 0
 
 	if direction.y == +1:
 		print("GO DOWN ", direction.y)

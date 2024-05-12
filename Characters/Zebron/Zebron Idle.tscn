@@ -63,13 +63,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 7.0
 }]
 
 [node name="ZebronIdle" type="StaticBody2D"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_o2sm7")
-frame_progress = 0.447281
+autoplay = "default"
+frame_progress = 0.116887
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

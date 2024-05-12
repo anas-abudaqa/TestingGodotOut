@@ -65,3 +65,8 @@ func on_state_transition(calling_state : State, next_state : State):
 	current_state.on_enter()
 
 
+
+
+func _on_zebron_boss_go_to_idle():
+	print("Zebron change to Stop state bro ", current_state)
+	current_state = $Stop

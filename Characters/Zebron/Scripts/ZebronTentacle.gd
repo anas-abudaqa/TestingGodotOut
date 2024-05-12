@@ -1,27 +1,37 @@
 extends Area2D
+var tentacle_damage = 15
+signal TentacleDespawned
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+	monitoring = false
 
 func spawn(position: Vector2):
 	global_position = position
-	$AnimatedSprite2D.play("Spawn")
-	
+	$AnimatedSprite2D.play("Prespawn")
+	$SpawnTimer.start()
+	print("Let's spawn")
 
 func _on_animated_sprite_2d_animation_finished():
 	if $AnimatedSprite2D.animation == "Spawn":
 		$AnimatedSprite2D.play("Idle")
-		$IdleTimer.start()
+		$HoldTimer.start()
 	
-	if $AnimatedSprite2D.animation == "Despawn":
+	elif $AnimatedSprite2D.animation == "Despawn":
+		TentacleDespawned.emit()
 		queue_free()
+		
 
-func _on_timer_timeout():
+
+func _on_body_entered(body):
+	if body.is_in_group("Player"):
+		body.take_damage(tentacle_damage)
+
+
+func _on_spawn_timer_timeout():
+	$AnimatedSprite2D.play("Spawn")
+	$AudioStreamPlayer.play()
+	monitoring = true
+	
+
+func _on_hold_timer_timeout():
 	$AnimatedSprite2D.play("Despawn")

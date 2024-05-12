@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cwq6b7swsuhel"
+path="res://.godot/imported/zap2.mp3-2134937477e09ae60c81227a4c863fa1.mp3str"
+
+[deps]
+
+source_file="res://Music/Digital SFX Set/zap2.mp3"
+dest_files=["res://.godot/imported/zap2.mp3-2134937477e09ae60c81227a4c863fa1.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

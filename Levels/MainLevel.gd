@@ -6,24 +6,12 @@ var active_respawn_point
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	active_respawn_point = $RespawnPoint_0
 
-func change_first_interaction():
-	Zebron_first_interaction = "yum"
+func change_first_interaction(text):
+	Zebron_first_interaction = text
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-	#player = load("res://Characters/player.tscn")
-	#cores_picked_up = player_instance.cores_picked_up 
-	#print("Kos ", cores_picked_up)
-	#print("Omak ", player_instance.cores_picked_up)
-	
-	#print(cores_picked_up)
-	#if cores_picked_up == 4:
-		#print("You have won!")
-	#print(Zebron_first_interaction)
-
+		
 func set_active_respawn_point(ID):
 	if ID == "1":
 		active_respawn_point = $RespawnPoint_1
@@ -33,30 +21,37 @@ func set_active_respawn_point(ID):
 		active_respawn_point = $RespawnPoint3
 	print("This is the set respawn point now: Respawn Point ", active_respawn_point)
 	
-	
+
+func trigger_Zebron_battle():
+	print("Now we go fight!")
+	get_tree().change_scene_to_file("res://Levels/zebron_battle.tscn")
 	
 func _on_zebron_core_pickup_4_picked_up():
 	print("Picked up core number four!")
 	cores_picked_up += 1
+	if cores_picked_up == 4:
+		$ZebronIdle/Actionable.dialogue_start = "Endgame"
 
 
 func _on_zebron_core_pickup_2_picked_up():
 	print("Picked up core number two!")
-	MainLevel.cores_picked_up += 1
-	#call_deferred("_deferred_goto_scene")
+	cores_picked_up += 1
+	if cores_picked_up == 4:
+		$ZebronIdle/Actionable.dialogue_start = "Endgame"
 
 
 func _on_zebron_core_pickup_3_picked_up():
 	print("Picked up core number three!")
 	cores_picked_up += 1
+	if cores_picked_up == 4:
+		$ZebronIdle/Actionable.dialogue_start = "Endgame"
 
 
 func _on_zebron_core_pickup_picked_up():
 	print("Picked up core number one!")
 	cores_picked_up += 1
-
-	 
-
+	if cores_picked_up == 4:
+		$ZebronIdle/Actionable.dialogue_start = "Endgame"
 
 func _on_player_player_died():
 	## create new instance of player, remote transform 2D, and connect the player death signal to this function
@@ -72,7 +67,8 @@ func _on_player_player_died():
 	#print("Player has this many children: ", player.get_child_count())
 	player.add_child(remote_transform)
 	#Set respawn position to active respawn point position
-	player.global_position = active_respawn_point.global_position
+	player.global_position = active_respawn_point.global_posit4ion
 	#connect death signal from player to this fucntion
 	player.connect("player_died", _on_player_player_died)
+	
 	

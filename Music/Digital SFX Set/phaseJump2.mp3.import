@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://uml8yae6sigr"
+path="res://.godot/imported/phaseJump2.mp3-f89046ee35ec4d440b12ed3e11501b38.mp3str"
+
+[deps]
+
+source_file="res://Music/Digital SFX Set/phaseJump2.mp3"
+dest_files=["res://.godot/imported/phaseJump2.mp3-f89046ee35ec4d440b12ed3e11501b38.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

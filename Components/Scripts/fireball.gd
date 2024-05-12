@@ -2,7 +2,7 @@ extends Area2D
 
 
 @export var projectile_speed: int = 400
-@export var projectile_damage: int = 20
+@export var projectile_damage: int = 10
 var hitbox_orientation: float
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -43,5 +43,5 @@ func _on_body_entered(body):
 		
 	if body.is_in_group("Damageable"):
 		body.take_damage(projectile_damage)
-		body.is_hurt_by_fire = true
+		#body.is_hurt_by_fire = true
 	queue_free()

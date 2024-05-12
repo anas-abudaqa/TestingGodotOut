@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://wp7bbys3css7"
+path="res://.godot/imported/zapThreeToneUp.mp3-d6fa80fccce67e6653c90fd8602a89c2.mp3str"
+
+[deps]
+
+source_file="res://Music/Digital SFX Set/zapThreeToneUp.mp3"
+dest_files=["res://.godot/imported/zapThreeToneUp.mp3-d6fa80fccce67e6653c90fd8602a89c2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

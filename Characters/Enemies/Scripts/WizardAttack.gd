@@ -17,8 +17,9 @@ func on_enter():
 	## Add it to the root scene of the current scene tree
 	get_tree().root.add_child(projectile)
 	#call start function and feed it spawn position. Adjusted for player height
-	print("This is the direction: ", character.facing_direction)
+	#print("This is the direction: ", character.facing_direction)
 	projectile.start(Vector2(character.global_position.x, character.global_position.y - 33) , character.facing_direction)
+	$AudioStreamPlayer.play()
 	$CooldownTimer.start()
 
 #func _on_animated_sprite_2d_animation_finished():

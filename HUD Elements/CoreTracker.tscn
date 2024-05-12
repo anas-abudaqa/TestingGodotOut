@@ -1,0 +1,103 @@
+[gd_scene load_steps=12 format=3 uid="uid://d4apcldofsvf4"]
+
+[ext_resource type="Script" path="res://HUD Elements/Scripts/CoreTracker.gd" id="1_3m7oi"]
+[ext_resource type="Texture2D" uid="uid://dfhbog5xyt2hi" path="res://Art/ZebronCores.png" id="1_q0xsh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3motu"]
+atlas = ExtResource("1_q0xsh")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0rpsk"]
+atlas = ExtResource("1_q0xsh")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pvuhv"]
+atlas = ExtResource("1_q0xsh")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ghsmh"]
+atlas = ExtResource("1_q0xsh")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_neo7x"]
+atlas = ExtResource("1_q0xsh")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jkebu"]
+atlas = ExtResource("1_q0xsh")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1oedh"]
+atlas = ExtResource("1_q0xsh")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_agj0r"]
+atlas = ExtResource("1_q0xsh")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pal1q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3motu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0rpsk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvuhv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ghsmh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_neo7x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jkebu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1oedh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_agj0r")
+}],
+"loop": true,
+"name": &"Shine",
+"speed": 7.0
+}]
+
+[node name="CoreTracker" type="HBoxContainer"]
+offset_right = 83.0
+offset_bottom = 23.0
+script = ExtResource("1_3m7oi")
+
+[node name="Core1" type="AnimatedSprite2D" parent="."]
+position = Vector2(12, 11)
+sprite_frames = SubResource("SpriteFrames_pal1q")
+animation = &"Shine"
+autoplay = "Shine"
+frame = 6
+frame_progress = 0.914155
+
+[node name="Core2" type="AnimatedSprite2D" parent="."]
+position = Vector2(32, 11)
+sprite_frames = SubResource("SpriteFrames_pal1q")
+animation = &"Shine"
+autoplay = "Shine"
+frame_progress = 0.967198
+
+[node name="Core3" type="AnimatedSprite2D" parent="."]
+position = Vector2(52, 11)
+sprite_frames = SubResource("SpriteFrames_pal1q")
+animation = &"Shine"
+autoplay = "Shine"
+frame = 4
+frame_progress = 0.310229
+
+[node name="Core4" type="AnimatedSprite2D" parent="."]
+position = Vector2(72, 11)
+sprite_frames = SubResource("SpriteFrames_pal1q")
+animation = &"Shine"
+autoplay = "Shine"
+frame_progress = 0.967198

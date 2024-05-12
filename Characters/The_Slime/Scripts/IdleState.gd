@@ -9,7 +9,7 @@ func on_enter():
 		
 func state_process(delta):
 	#print("state Idle prcess")
-	if character.aggrod and $RestTimer.is_stopped():
+	if character.is_aggrod and $RestTimer.is_stopped():
 		$RestTimer.start()
 
 func _on_rest_timer_timeout():

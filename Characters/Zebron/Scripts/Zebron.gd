@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 class_name ZebronAI
 signal ZebronDead
+signal GoToIdle
 
 @export var playerbody: CharacterBody2D
 @export var spawn_point: Marker2D
@@ -17,7 +18,7 @@ var direction: Vector2i = Vector2.ZERO
 
 func _ready():
 	$HealthAndShieldNode.set_health(maximum_health)
-	global_position = spawn_point.global_position
+	#global_position = spawn_point.global_position
 
 func _physics_process(delta):
 
@@ -77,4 +78,15 @@ func _on_health_and_shield_node_has_died():
 	$AnimatedSprite2D.play("Death")
 	await $AnimatedSprite2D.animation_finished
 	ZebronDead.emit()
-	queue_free()
+	#queue_free()
+
+
+#func _on_player_player_died():
+	#
+	#print("Zebron detected Player died")
+	#GoToIdle.emit()
+
+
+func _on_player_max_player_died():
+	print("Zebron detected Player died")
+	GoToIdle.emit()

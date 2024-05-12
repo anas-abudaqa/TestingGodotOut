@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b2whwn174d4yk"
+path="res://.godot/imported/lowDown.mp3-b3698bf8b4017820c8397c52c89deb87.mp3str"
+
+[deps]
+
+source_file="res://Music/Digital SFX Set/lowDown.mp3"
+dest_files=["res://.godot/imported/lowDown.mp3-b3698bf8b4017820c8397c52c89deb87.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

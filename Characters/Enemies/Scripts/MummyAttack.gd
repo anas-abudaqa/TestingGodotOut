@@ -9,6 +9,7 @@ func state_process(delta):
 
 func on_enter():
 	animated_sprite.play("Attack")
+	$AudioStreamPlayer.play()
 	$WindupTimer.start()
 
 func _on_windup_timer_timeout():

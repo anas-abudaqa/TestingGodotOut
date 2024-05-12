@@ -78,7 +78,7 @@ func _on_health_and_shield_node_health_changed(cur_health, _max_health):
 
 
 func _on_health_and_shield_node_has_died():
-	print("DEAD MF")
+	#print("DEAD MF")
 	SPEED = 0
 	$AnimatedSprite2D.play("Death")
 	await $AnimatedSprite2D.animation_finished

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dw50svsx7c8ud"
+path="res://.godot/imported/powerUp12.mp3-3528c6279e4b617240654f96bf8f8b27.mp3str"
+
+[deps]
+
+source_file="res://Music/Digital SFX Set/powerUp12.mp3"
+dest_files=["res://.godot/imported/powerUp12.mp3-3528c6279e4b617240654f96bf8f8b27.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b5ekrx16cso7k"
+path="res://.godot/imported/laser7.mp3-a38219588fa802dedb6fdf34487fc126.mp3str"
+
+[deps]
+
+source_file="res://Music/Digital SFX Set/laser7.mp3"
+dest_files=["res://.godot/imported/laser7.mp3-a38219588fa802dedb6fdf34487fc126.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

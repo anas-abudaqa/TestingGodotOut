@@ -1,22 +1,87 @@
-[gd_scene load_steps=4 format=3 uid="uid://bf8lvojsrl7q0"]
+[gd_scene load_steps=13 format=3 uid="uid://bf8lvojsrl7q0"]
 
-[ext_resource type="Texture2D" uid="uid://t83sfe4gy3p3" path="res://Legacy-Fantasy - High Forest 2.3/Green Circle.png" id="1_h0y5e"]
 [ext_resource type="Script" path="res://Components/ability_pickups_component.gd" id="1_l0qse"]
+[ext_resource type="Texture2D" uid="uid://7hq02w6dmm1q" path="res://Art/platformer items - free assets/animated_items.png" id="2_shbnb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vm5bw"]
 radius = 12.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6asrm"]
+atlas = ExtResource("2_shbnb")
+region = Rect2(0, 256, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_msrfa"]
+atlas = ExtResource("2_shbnb")
+region = Rect2(32, 256, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ajxd"]
+atlas = ExtResource("2_shbnb")
+region = Rect2(64, 256, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_csko3"]
+atlas = ExtResource("2_shbnb")
+region = Rect2(96, 256, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a67c6"]
+atlas = ExtResource("2_shbnb")
+region = Rect2(128, 256, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wkd22"]
+atlas = ExtResource("2_shbnb")
+region = Rect2(160, 256, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c5h5h"]
+atlas = ExtResource("2_shbnb")
+region = Rect2(192, 256, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8meng"]
+atlas = ExtResource("2_shbnb")
+region = Rect2(224, 256, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cc6c7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6asrm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_msrfa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ajxd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_csko3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a67c6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wkd22")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c5h5h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8meng")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [node name="PickUp" type="Area2D"]
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("1_l0qse")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.05, 0.05)
-texture = ExtResource("1_h0y5e")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_vm5bw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_cc6c7")
+autoplay = "default"
+frame_progress = 0.756342
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

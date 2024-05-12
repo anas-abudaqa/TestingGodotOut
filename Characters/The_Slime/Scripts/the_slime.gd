@@ -2,15 +2,16 @@ extends CharacterBody2D
 
 class_name TheSlimeAI
 signal SlimeDead
+signal aggrod
 
-@export var playerbody: CharacterBody2D
-const SPEED = 200.0
+#@export var playerbody: CharacterBody2D
+const SPEED = 175.0
 const VERTICAL_SPEED = 150.0
-const CONTACT_DAMAGE = 10
-var aggrod: bool = false
-var maximum_health: float = 10
+const CONTACT_DAMAGE = 5
+var is_aggrod: bool = false
+var maximum_health: float = 80
 var current_health: float = 0
-
+var player_is_right: bool = false
 
 var direction: Vector2i = Vector2.ZERO
 
@@ -61,15 +62,8 @@ func check_for_ceiling():
 	if is_on_ceiling():
 		direction.y *= -1
 
-
-##When player walks into range, start aggression
-func _on_player_detector_player_detected():
-	aggrod = true
-	print("Now we are aggrod")
-
 func take_damage(damage_value):
 	$HealthAndShieldNode.deal_damage(damage_value)
-
 
 func _on_health_and_shield_node_health_changed(curr_health, max_health):
 	current_health = curr_health
@@ -86,3 +80,14 @@ func _on_health_and_shield_node_has_died():
 func _on_hitbox_body_entered(body):
 	if body.is_in_group("Player"):
 		body.take_damage(CONTACT_DAMAGE)
+
+
+func _on_ray_cast_2d_left_player_detected():
+	if not is_aggrod:
+		is_aggrod = true
+		aggrod.emit()
+	player_is_right = false
+
+
+func _on_ray_cast_2d_right_player_detected():
+	player_is_right = true

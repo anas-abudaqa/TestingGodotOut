@@ -48,13 +48,13 @@ func can_move():
 func on_state_transition(calling_state : State, next_state : State):
 	#if the state calling the function is not the current state, ignore
 	if calling_state != current_state:
-		print("Wizard: Error: calling state: , ", calling_state, " is not the current state ", current_state)
+		#print("Wizard: Error: calling state: , ", calling_state, " is not the current state ", current_state)
 		return
 	if next_state not in states_array:
-		print("Wizard: Error: Next state - ", next_state, " - is not in the State Array")
+		#print("Wizard: Error: Next state - ", next_state, " - is not in the State Array")
 		return
 		
-	print("Wizard: Transitioning from ", current_state, " to ", next_state)
+	#print("Wizard: Transitioning from ", current_state, " to ", next_state)
 	
 	## Call on_exit function of current state
 	current_state.on_exit()

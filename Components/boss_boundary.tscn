@@ -1,15 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://blalsq3hgf8tn"]
 
-[ext_resource type="Script" path="res://Components/Scripts/BossBoundary.gd" id="1_10d7u"]
+[ext_resource type="Script" path="res://Components/Scripts/boss_boundary.gd" id="1_jwfuy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aqotj"]
 size = Vector2(48.5, 233.5)
 
-[node name="BossBoundary" type="Area2D"]
-collision_mask = 38
-script = ExtResource("1_10d7u")
+[node name="BossBoundary" type="StaticBody2D"]
+collision_mask = 2
+script = ExtResource("1_jwfuy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_aqotj")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]

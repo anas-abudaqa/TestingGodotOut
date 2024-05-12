@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://4qivtkdgjw3m"]
+[gd_scene load_steps=48 format=3 uid="uid://4qivtkdgjw3m"]
 
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/Mummy.gd" id="1_pm5yw"]
 [ext_resource type="Texture2D" uid="uid://ddvnnvbvhjg50" path="res://Art/5 Mummy/Mummy_attack.png" id="2_mh021"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/MummyWalk.gd" id="10_1gb5r"]
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/MummyAttack.gd" id="11_iuc32"]
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/MummyHurt.gd" id="12_fn64w"]
+[ext_resource type="AudioStream" uid="uid://bvq6gcpavc4o" path="res://Music/mixkit-fast-sword-whoosh-2792.wav" id="13_1n088"]
 [ext_resource type="PackedScene" uid="uid://b0glgx3pu4xre" path="res://Components/health&shield_component.tscn" id="13_pc0wp"]
 [ext_resource type="AudioStream" uid="uid://ulquaq2rnk6j" path="res://Music/mixkit-quick-saber-cut-2158.mp3" id="14_1ql2r"]
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/MummyLabel.gd" id="14_7c4l5"]
@@ -289,6 +290,10 @@ can_move = false
 [node name="WindupTimer" type="Timer" parent="CharacterStateMachine/Attack"]
 wait_time = 0.6
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CharacterStateMachine/Attack"]
+stream = ExtResource("13_1n088")
+volume_db = 5.0
+
 [node name="Hurt" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("idle_state")]
 script = ExtResource("12_fn64w")
 idle_state = NodePath("../Idle")
@@ -296,7 +301,7 @@ can_move = false
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CharacterStateMachine/Hurt"]
 stream = ExtResource("14_1ql2r")
-volume_db = 5.0
+volume_db = 1.0
 
 [node name="HealthAndShieldNode" parent="." instance=ExtResource("13_pc0wp")]
 

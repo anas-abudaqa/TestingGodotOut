@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://beokvb7pbm752"
+path="res://.godot/imported/twoTone1.mp3-2d00c4750db3eb1f53bc3bce1bb106c9.mp3str"
+
+[deps]
+
+source_file="res://Music/Digital SFX Set/twoTone1.mp3"
+dest_files=["res://.godot/imported/twoTone1.mp3-2d00c4750db3eb1f53bc3bce1bb106c9.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

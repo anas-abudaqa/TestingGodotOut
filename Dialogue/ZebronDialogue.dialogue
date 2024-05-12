@@ -3,20 +3,28 @@
 if MainLevel.Zebron_first_interaction == "":
 	Sorcerer: Ah good, you finally woke up. Hurry, you need to find the 4 magic cores that flew off after your fight with Zebron. 
 	Sorcerer: Otherwise Zebron will recover and everyone died for nothing! Hurry, Go
-	do MainLevel.change_first_interaction()
+	do MainLevel.change_first_interaction("yum")
 	=> END
 	#set Zebron_first_interaction = "done"
 	
 
+#if MainLevel.Zebron_first_interaction == "Done":
+#	Sorcerer: You did it!
+#	Sorcerer: You collected all 4 of my cores.
+#	Zebron: So gullible, now you lose
+#	do MainLevel.trigger_Zebron_battle()
+#	=> END
+	
 Sorcerer: You need to find the 4 magic cores to restore stability to the region. 
 
 => END
 
 
 ~ Endgame
-	
+
+#if MainLevel.Zebron_first_interaction == "done":
 Sorcerer: You did it!
 Sorcerer: You collected all 4 of my cores.
 Zebron: So gullible, now you lose
-	
+do MainLevel.trigger_Zebron_battle()
 => END

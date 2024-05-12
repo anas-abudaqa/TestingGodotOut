@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://c72j371oc2uhu"]
+[gd_scene load_steps=43 format=3 uid="uid://c72j371oc2uhu"]
 
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/Wizard.gd" id="1_akiwq"]
 [ext_resource type="Texture2D" uid="uid://bjpkio55x44ht" path="res://Art/6 Deceased/Deceased_attack.png" id="1_olkng"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/WizardIdle.gd" id="8_5uh0x"]
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/WizardWalk.gd" id="9_imgfe"]
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/WizardAttack.gd" id="10_6gras"]
+[ext_resource type="AudioStream" uid="uid://3mmthwk61j5r" path="res://Music/Fireball.wav" id="11_ge4ft"]
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/WizardHurt.gd" id="11_nyjta"]
 [ext_resource type="PackedScene" uid="uid://b0glgx3pu4xre" path="res://Components/health&shield_component.tscn" id="12_nvktw"]
 [ext_resource type="Script" path="res://Characters/Enemies/Scripts/WizardLabel.gd" id="13_d052c"]
@@ -258,6 +259,10 @@ wait_time = 2.0
 
 [node name="WindupTimer" type="Timer" parent="CharacterStateMachine/Attack"]
 wait_time = 0.2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CharacterStateMachine/Attack"]
+stream = ExtResource("11_ge4ft")
+volume_db = 1.0
 
 [node name="Hurt" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("idle_state")]
 script = ExtResource("11_nyjta")

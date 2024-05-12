@@ -1,6 +1,11 @@
 extends CharacterBody2D
 
 signal player_died
+signal core_picked_up
+#signal core2_picked_up
+#signal core3_picked_up
+#signal core4_picked_up
+
 
 @onready var state_machine: CharacterStateMachine = $CharacterStateMachine
 
@@ -8,14 +13,14 @@ signal player_died
 var player_speed: float = 130.0
 var jump_velocity: float = -250.0
 var double_jump_velocity_horizontal: float = 50
-var double_jump_velocity_vertical: float = -150
+var double_jump_velocity_vertical: float = -200
 
 var locked_abilities = ["OnWall", "Dash", "Fireball"]
 var unlocked_abilities = []
 #var cores_picked_up: int = 0
 var direction: Vector2 = Vector2.ZERO
 var sword_position: float
-var max_health: int = 50
+var max_health: int = 100
 var current_health: int
 var invulnerable: bool = false
 var facing_right: bool = false
@@ -25,6 +30,7 @@ var respawn_point_ID: String
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
+	print("I am born")
 	sword_position = $Sword/SwordHitbox.position.x
 	$AnimationTree.active = true
 	$HealthAndShieldNode.set_health(max_health)
@@ -82,8 +88,9 @@ func update_orientation():
 func take_damage(value: int):
 	if not invulnerable:
 		$HealthAndShieldNode.deal_damage(value)
-		$InvulnerabilityTimer.start()
-		invulnerable = true
+		become_invulnerable()
+		$HurtAudio.play()
+	
 
 func heal_HP(heal_value: int):
 	$HealthAndShieldNode.heal(heal_value)
@@ -96,6 +103,10 @@ func unlock_ability(ability_name: String):
 	unlocked_abilities.append(ability_name)
 	$CharacterStateMachine.unlock_state(ability_name)
 	print(unlocked_abilities)
+
+func become_invulnerable():
+	$InvulnerabilityTimer.start()
+	invulnerable = true
 
 func _on_health_and_shield_node_health_changed(health, max_hp):
 	current_health = health
@@ -129,12 +140,14 @@ func _on_terrain_detector_entered_spikes():
 
 
 func _on_health_and_shield_node_has_died():
-	current_health = 0
-	$AnimationTree.get("parameters/playback").travel("Death")
-	#await $AnimationPlayer.animation_finished 
-	queue_free()
-	player_died.emit()
-
+	#current_health = 0
+	if $DeathAnimation.visible == false:
+		$Sprite2D.visible = false
+		$DeathAnimation.visible = true
+		$DeathAnimation.play("Death")
+		#print("Idk but we should be dying rn?")
+		#await $DeathAnimation.animation_finished
+	
 
 func _on_invulnerability_timer_timeout():
 	invulnerable = false
@@ -170,3 +183,27 @@ func _on_respawn_point_3_player_left(ID):
 	print("Player left vicinity of respawn point: ", ID)
 	respawn_point_ID = ""
 	is_in_respawn_point = false
+
+
+func _on_death_animation_animation_finished():
+	if $DeathAnimation.animation == "Death":
+		#print("We died i think?")
+		player_died.emit()
+		queue_free()
+	
+
+
+func _on_zebron_core_pickup_picked_up():
+	core_picked_up.emit()
+
+
+func _on_zebron_core_pickup_2_picked_up():
+	core_picked_up.emit()
+
+
+func _on_zebron_core_pickup_3_picked_up():
+	core_picked_up.emit()
+
+
+func _on_zebron_core_pickup_4_picked_up():
+	core_picked_up.emit()

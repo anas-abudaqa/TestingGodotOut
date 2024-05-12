@@ -1,7 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://bo1v08ombke3t"]
+[gd_scene load_steps=30 format=3 uid="uid://bo1v08ombke3t"]
 
 [ext_resource type="Script" path="res://Characters/Zebron/Scripts/ZebronTentacle.gd" id="1_3qsr6"]
 [ext_resource type="Texture2D" uid="uid://onw55jt2e1ry" path="res://Art/Ars_Notoria_Enemies/tentacles-25x90.png" id="1_jts1b"]
+[ext_resource type="AudioStream" uid="uid://byeq4gsoq7bpp" path="res://Music/ZebronTentacle.wav" id="3_0klub"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ilkgl"]
 atlas = ExtResource("1_jts1b")
@@ -198,7 +199,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hijb7")
+}],
+"loop": false,
+"name": &"Prespawn",
+"speed": 15.0
 }, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_251g0")
 }, {
@@ -244,21 +250,29 @@ height = 76.0
 [node name="ZebronTentacle" type="Area2D"]
 collision_layer = 0
 collision_mask = 2
+monitoring = false
 script = ExtResource("1_3qsr6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_bcgrc")
-animation = &"Despawn"
-frame = 15
-frame_progress = 1.0
+animation = &"Spawn"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 8)
 shape = SubResource("CapsuleShape2D_0wp4d")
 
-[node name="IdleTimer" type="Timer" parent="."]
-wait_time = 5.0
+[node name="HoldTimer" type="Timer" parent="."]
+wait_time = 1.5
 one_shot = true
 
+[node name="SpawnTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_0klub")
+volume_db = -5.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="timeout" from="IdleTimer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="HoldTimer" to="." method="_on_hold_timer_timeout"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

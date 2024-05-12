@@ -4,21 +4,28 @@ var teleport_counter = 0
 
 @export var idle_state: State
 @export var shoot_state: State
+@export var stop_state: State
 # Called when the node enters the scene tree for the first time.
 
 func on_enter():
 	animated_sprite.play("Disappear")
+	$DisappearAudio.play()
+	
 
 func invisible_bro():
 	animated_sprite.visible = false
 
 func find_player():
-	player_position = character.playerbody.global_position
+	if character.playerbody != null:
+		player_position = character.playerbody.global_position
+	else:
+		Transitioned.emit(self, stop_state)
 	
 func teleport():
 	character.global_position = player_position
 	animated_sprite.visible = true
 	animated_sprite.play("Reappear")
+	$ReappearAudio.play()
 
 func _on_invisibility_timer_timeout():
 	find_player()
@@ -41,9 +48,11 @@ func _on_animated_sprite_2d_animation_finished():
 		#print("we disappearing bro")
 		invisible_bro()
 		$InvisibilityTimer.start()
-		
-	if animated_sprite.animation == "Reappear":
+	##made into elif to avoid bugs	
+	elif animated_sprite.animation == "Reappear":
 		#print("we reappearing nowww")
 		$CoolDownTimer.start()
-		
-	 
+
+
+func _on_timer_timeout():
+	pass # Replace with function body.

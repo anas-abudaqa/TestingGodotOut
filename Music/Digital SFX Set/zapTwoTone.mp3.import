@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://kdap05e4ujm8"
+path="res://.godot/imported/zapTwoTone.mp3-938bd415549628e033ba5f5727ea7520.mp3str"
+
+[deps]
+
+source_file="res://Music/Digital SFX Set/zapTwoTone.mp3"
+dest_files=["res://.godot/imported/zapTwoTone.mp3-938bd415549628e033ba5f5727ea7520.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

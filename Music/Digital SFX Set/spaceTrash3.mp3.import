@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dmapoen4qhopp"
+path="res://.godot/imported/spaceTrash3.mp3-531e1ad7a63bca6bfc1453c0d5a6fc80.mp3str"
+
+[deps]
+
+source_file="res://Music/Digital SFX Set/spaceTrash3.mp3"
+dest_files=["res://.godot/imported/spaceTrash3.mp3-531e1ad7a63bca6bfc1453c0d5a6fc80.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

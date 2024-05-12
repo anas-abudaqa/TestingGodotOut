@@ -1,6 +1,6 @@
 extends State
 
-@export var chaseplayer_state: State
+#@export var chaseplayer_state: State
 @export var acidshot_state: State
 # Called when the node enters the scene tree for the first time.
 
